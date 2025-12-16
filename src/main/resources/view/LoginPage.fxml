@@ -78,7 +78,7 @@
       </TextField>
       <ImageView fitHeight="98.0" fitWidth="103.0" layoutX="4.0" layoutY="-4.0" style="-fx-preserve-ratio: 100;">
          <image>
-            <Image url="@../image/logo.PNG" />
+            <Image url="@../image/logo.png" />
          </image>
       </ImageView>
     </children>

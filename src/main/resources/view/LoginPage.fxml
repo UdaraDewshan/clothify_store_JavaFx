@@ -23,43 +23,43 @@
 
             <!-- Card -->
             <VBox alignment="TOP_CENTER" maxWidth="395.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="501.0" prefWidth="382.0" spacing="20" style="-fx-background-color: white;                          -fx-background-radius: 18;                          -fx-padding: 28 40;                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 30, 0, 0, 8);">
-   
+
                 <!-- Title -->
                 <Label style="-fx-font-size: 26px; -fx-font-weight: 800; -fx-text-fill: #303052;" text="Welcome Back!" />
-   
+
                    <Label style="-fx-font-size: 14px; -fx-text-fill: #7d7f90;" text="Login to your account" />
-   
+
                    <!-- Email Field -->
                 <VBox prefWidth="280" spacing="6">
                     <Label style="-fx-font-size: 12px; -fx-text-fill: #5a5c6e;" text="Email" />
                     <TextField fx:id="txtEmail" promptText="Enter your email" style="-fx-background-radius: 10;                                       -fx-border-radius: 10;                                       -fx-background-color: #f3f4f7;                                       -fx-padding: 10;" />
                 </VBox>
-   
+
                 <!-- Password Field -->
                 <VBox prefWidth="280" spacing="6">
                     <Label style="-fx-font-size: 12px; -fx-text-fill: #5a5c6e;" text="Password" />
                     <PasswordField fx:id="txtPassword" promptText="Enter your password" style="-fx-background-radius: 10;                                           -fx-border-radius: 10;                                           -fx-background-color: #f3f4f7;                                           -fx-padding: 10;" />
                 </VBox>
-   
+
                 <!-- Remember Me -->
                 <HBox alignment="CENTER_LEFT" prefWidth="280" spacing="6">
                     <CheckBox fx:id="chkRemember" />
                     <Label style="-fx-text-fill: #585a6e; -fx-font-size: 12px;" text="Remember me" />
                 </HBox>
-   
+
                 <!-- Error Message -->
                 <Label fx:id="lblMessage" style="-fx-text-fill: #ff4b5c; -fx-font-size: 12px;" text="" />
-   
+
                 <!-- Login Button -->
                 <Button fx:id="btnLogin" onAction="#onLogin" prefWidth="280" style="-fx-background-radius: 10;                                -fx-background-color: linear-gradient(to right, #6a11cb, #2575fc);                                -fx-text-fill: white;                                -fx-font-size: 14px;                                -fx-font-weight: bold;                                -fx-padding: 10;                                -fx-cursor: hand;" text="SIGN IN" />
-   
+
                 <!-- Divider -->
                 <Separator prefWidth="260" />
-   
+
                 <!-- Sign Up Link -->
                 <HBox alignment="CENTER" spacing="4">
                     <Label style="-fx-text-fill:#7d7f90; -fx-font-size: 12px;" text="Don't have an account?" />
-   
+
                     <Hyperlink fx:id="linkSignUp" onAction="#onSignUp" style="-fx-text-fill:#6a11cb; -fx-font-size:12px;" text="Sign Up" />
                 </HBox>
 

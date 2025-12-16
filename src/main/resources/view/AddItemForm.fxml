@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="620" prefWidth="900" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddItemFormController">
+
+
+    <!-- Background -->
+    <ImageView fitHeight="620" fitWidth="900">
+        <image>
+            <Image url="@../image/new image.png" />
+        </image>
+    </ImageView>
+
+
+    <!-- Overlay -->
+    <Rectangle height="620" opacity="0.5" width="900" />
+
+
+    <!-- Title -->
+    <Label layoutX="150" layoutY="30" text="Add Items" textFill="WHITE">
+        <font><Font size="28" /></font>
+    </Label>
+
+
+    <!-- Card -->
+    <Rectangle arcHeight="40" arcWidth="40" height="500" layoutX="50" layoutY="90" opacity="0.55" width="800" />
+
+
+    <!-- Left Fields -->
+    <Label layoutX="120" layoutY="150" text="Item Code" textFill="WHITE" />
+    <JFXTextField fx:id="txtCode" editable="false" layoutX="230" layoutY="145" />
+
+
+    <Label layoutX="120" layoutY="200" text="Supplier" textFill="WHITE" />
+    <JFXComboBox fx:id="cmbSupplier" layoutX="230" layoutY="195" prefWidth="120" />
+    <JFXTextField fx:id="txtSupplierName" editable="false" layoutX="360" layoutY="195" promptText="Supplier Name" />
+
+
+    <Label layoutX="120" layoutY="250" text="Description" textFill="WHITE" />
+    <JFXTextField fx:id="txtDescription" layoutX="230" layoutY="245" prefWidth="220" />
+
+
+    <Label layoutX="120" layoutY="295" text="Qty" textFill="WHITE" />
+    <JFXTextField fx:id="txtQty" layoutX="230" layoutY="290" />
+
+
+    <Label layoutX="120" layoutY="340" text="Buying Price" textFill="WHITE" />
+    <JFXTextField fx:id="txtBuying" layoutX="230" layoutY="335" />
+
+
+    <!-- Right Fields -->
+    <Label layoutX="520" layoutY="150" text="Selling Price" textFill="WHITE" />
+    <JFXTextField fx:id="txtSelling" layoutX="650" layoutY="145" />
+
+
+    <Label layoutX="520" layoutY="200" text="Type" textFill="WHITE" />
+    <JFXTextField fx:id="txtType" layoutX="650" layoutY="195" />
+
+
+    <Label layoutX="520" layoutY="250" text="Size" textFill="WHITE" />
+    <JFXTextField fx:id="txtSize" layoutX="650" layoutY="245" />
+
+
+    <Label layoutX="520" layoutY="300" text="Profit" textFill="WHITE" />
+    <JFXTextField fx:id="txtProfit" editable="false" layoutX="650" layoutY="295" />
+
+
+    <!-- Buttons -->
+    <JFXButton layoutX="650" layoutY="340" onAction="#addItem" style="-fx-background-color:#2ecc71; -fx-text-fill:white;" text="Add Item" />
+
+
+    <JFXButton layoutX="760" layoutY="340" onAction="#clearFields" style="-fx-background-color:#3498db; -fx-text-fill:white;" text="Clear" />
+
+
+    <!-- Table -->
+    <TableView fx:id="tblItems" layoutX="90" layoutY="390" prefHeight="190" prefWidth="720">
+        <columns>
+            <TableColumn prefWidth="70" text="Code" />
+            <TableColumn prefWidth="140" text="Description" />
+            <TableColumn prefWidth="60" text="Qty" />
+            <TableColumn prefWidth="80" text="Buy" />
+            <TableColumn prefWidth="80" text="Sell" />
+            <TableColumn prefWidth="80" text="Profit" />
+            <TableColumn prefWidth="120" text="Supplier" />
+        </columns>
+    </TableView>
+   <ImageView fitHeight="125.0" fitWidth="126.0" layoutX="28.0" layoutY="-17.0">
+      <image>
+         <Image url="@../image/logo.png" />
+      </image>
+   </ImageView>
+
+
+</AnchorPane>

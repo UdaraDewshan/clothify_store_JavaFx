@@ -7,10 +7,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class SupplierDTO {
+public class ProductDTO {
     private String name;
-    private String company;
-    private String email;
-    private String contactNo;
+    private String category;
+    private int size;
+    private Double price;
+    private int qty;
 }
-

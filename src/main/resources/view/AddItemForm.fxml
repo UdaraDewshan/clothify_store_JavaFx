@@ -12,29 +12,25 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="620" prefWidth="900" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddItemFormController">
+<AnchorPane prefHeight="590.0" prefWidth="852.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddItemFormController">
 
 
     <!-- Background -->
-    <ImageView fitHeight="620" fitWidth="900">
+    <ImageView fitHeight="661.0" fitWidth="908.0" layoutX="-11.0">
         <image>
             <Image url="@../image/new image.png" />
         </image>
     </ImageView>
 
 
-    <!-- Overlay -->
-    <Rectangle height="620" opacity="0.5" width="900" />
-
-
     <!-- Title -->
-    <Label layoutX="150" layoutY="30" text="Add Items" textFill="WHITE">
-        <font><Font size="28" /></font>
+    <Label layoutX="66.0" layoutY="38.0" text="Add Items" textFill="WHITE">
+        <font><Font name="Bodoni MT Black" size="28.0" /></font>
     </Label>
 
 
     <!-- Card -->
-    <Rectangle arcHeight="40" arcWidth="40" height="500" layoutX="50" layoutY="90" opacity="0.55" width="800" />
+    <Rectangle arcHeight="40" arcWidth="40" height="514.0" layoutX="50" layoutY="90" opacity="0.55" width="798.0" />
 
 
     <!-- Left Fields -->
@@ -44,7 +40,6 @@
 
     <Label layoutX="120" layoutY="200" text="Supplier" textFill="WHITE" />
     <JFXComboBox fx:id="cmbSupplier" layoutX="230" layoutY="195" prefWidth="120" />
-    <JFXTextField fx:id="txtSupplierName" editable="false" layoutX="360" layoutY="195" promptText="Supplier Name" />
 
 
     <Label layoutX="120" layoutY="250" text="Description" textFill="WHITE" />
@@ -77,14 +72,19 @@
 
 
     <!-- Buttons -->
-    <JFXButton layoutX="650" layoutY="340" onAction="#addItem" style="-fx-background-color:#2ecc71; -fx-text-fill:white;" text="Add Item" />
+    <JFXButton layoutX="685.0" layoutY="340.0" onAction="#addItem" style="-fx-background-color:#2ecc71; -fx-text-fill:white;" text="Add Item" />
 
 
     <JFXButton layoutX="760" layoutY="340" onAction="#clearFields" style="-fx-background-color:#3498db; -fx-text-fill:white;" text="Clear" />
+   <ImageView fitHeight="124.0" fitWidth="135.0" layoutX="713.0" layoutY="10.0">
+      <image>
+         <Image url="@../image/logo.png" />
+      </image>
+   </ImageView>
 
 
     <!-- Table -->
-    <TableView fx:id="tblItems" layoutX="90" layoutY="390" prefHeight="190" prefWidth="720">
+    <TableView fx:id="tblItems" layoutX="90" layoutY="390" prefHeight="190" prefWidth="720" style="-fx-background-color: light blue; -fx-background-radius: 20;">
         <columns>
             <TableColumn prefWidth="70" text="Code" />
             <TableColumn prefWidth="140" text="Description" />
@@ -95,11 +95,11 @@
             <TableColumn prefWidth="120" text="Supplier" />
         </columns>
     </TableView>
-   <ImageView fitHeight="125.0" fitWidth="126.0" layoutX="28.0" layoutY="-17.0">
-      <image>
-         <Image url="@../image/logo.png" />
-      </image>
-   </ImageView>
+   <JFXButton layoutX="815.0" layoutY="610.0" onAction="#clearFields" prefHeight="34.0" prefWidth="66.0" style="-fx-background-color:#3498db; -fx-text-fill:white;" text="Back">
+      <font>
+         <Font size="17.0" />
+      </font>
+   </JFXButton>
 
 
 </AnchorPane>

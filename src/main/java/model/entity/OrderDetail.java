@@ -1,5 +1,6 @@
 package model.entity;
 
+import jakarta.persistence.Entity;
 import lombok.*;
 
 @Setter
@@ -7,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Entity
 public class OrderDetail {
     private String orderId;
     private String productId;

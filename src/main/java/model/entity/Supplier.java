@@ -1,5 +1,8 @@
 package model.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 
 @Setter
@@ -7,7 +10,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Entity
+@Table(name = "supplies")
 public class Supplier {
+    @Id
     private String supplierId;
     private String name;
     private String company;

@@ -84,15 +84,15 @@
 
 
     <!-- Table -->
-    <TableView fx:id="tblItems" layoutX="90" layoutY="390" prefHeight="190" prefWidth="720" style="-fx-background-color: light blue; -fx-background-radius: 20;">
+    <TableView fx:id="tblItems" layoutX="130.0" layoutY="395.0" prefHeight="190" prefWidth="720" style="-fx-background-color: light blue; -fx-background-radius: 20;">
         <columns>
             <TableColumn prefWidth="70" text="Code" />
             <TableColumn prefWidth="140" text="Description" />
             <TableColumn prefWidth="60" text="Qty" />
-            <TableColumn prefWidth="80" text="Buy" />
-            <TableColumn prefWidth="80" text="Sell" />
-            <TableColumn prefWidth="80" text="Profit" />
-            <TableColumn prefWidth="120" text="Supplier" />
+            <TableColumn prefWidth="96.0" text="Buy" />
+            <TableColumn prefWidth="103.0" text="Sell" />
+            <TableColumn prefWidth="105.0" text="Profit" />
+            <TableColumn prefWidth="145.0" text="Supplier" />
         </columns>
     </TableView>
    <JFXButton layoutX="815.0" layoutY="610.0" onAction="#clearFields" prefHeight="34.0" prefWidth="66.0" style="-fx-background-color:#3498db; -fx-text-fill:white;" text="Back">

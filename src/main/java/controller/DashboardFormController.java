@@ -3,28 +3,34 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class DashboardFormController {
+public class DashboardFormController implements Initializable {
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadUI("OverviewForm.fxml");
+    }
 
     @FXML
     private AnchorPane contentArea;
 
     @FXML
     void btnDashboardOnAction(ActionEvent event) {
-        // System.out.println("Dashboard Clicked");
-        // loadUI("OverviewForm.fxml");
+        loadUI("OverviewForm.fxml");
     }
 
     @FXML
     void btnPOSOnAction(ActionEvent event) {
-        // loadUI("POSForm.fxml");
-        System.out.println("POS Clicked! (UI not created yet)");
+        loadUI("POSForm.fxml");
     }
 
     @FXML

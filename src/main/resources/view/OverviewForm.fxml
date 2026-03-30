@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="700.0" prefWidth="950.0" style="-fx-background-color: #f4f5f9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OverviewFormController">
+
+    <Text fill="#1a1d2b" layoutX="40.0" layoutY="50.0" text="Overview">
+        <font>
+            <Font name="Berlin Sans FB Demi Bold" size="32.0" />
+        </font>
+    </Text>
+    <Label fx:id="lblDate" layoutX="42.0" layoutY="60.0" text="Thursday, 15 Jan 2026 | 03:49 PM" textFill="#7d8597">
+        <font><Font name="System Bold" size="14.0" /></font>
+    </Label>
+
+    <AnchorPane layoutX="40.0" layoutY="100.0" prefHeight="110.0" prefWidth="250.0">
+        <Rectangle arcHeight="20" arcWidth="20" fill="WHITE" height="110.0" stroke="#e0e0e0" strokeType="INSIDE" width="250.0" />
+        <Label layoutX="20.0" layoutY="15.0" text="TOTAL REVENUE" textFill="#5a5c6e">
+            <font><Font name="System Bold" size="12.0" /></font>
+        </Label>
+        <Label fx:id="lblTotalRevenue" layoutX="20.0" layoutY="35.0" text="LKR 432,900.0" textFill="#1a1d2b">
+            <font><Font name="System Bold" size="24.0" /></font>
+        </Label>
+        <Label layoutX="20.0" layoutY="75.0" text="↑ 12% from last month" textFill="#2ecc71">
+            <font><Font size="12.0" /></font>
+        </Label>
+    </AnchorPane>
+
+    <AnchorPane layoutX="310.0" layoutY="100.0" prefHeight="110.0" prefWidth="190.0">
+        <Rectangle arcHeight="20" arcWidth="20" fill="WHITE" height="110.0" stroke="#e0e0e0" strokeType="INSIDE" width="190.0" />
+        <Label layoutX="20.0" layoutY="15.0" text="ACTIVE ORDERS" textFill="#5a5c6e">
+            <font><Font name="System Bold" size="12.0" /></font>
+        </Label>
+        <Label fx:id="lblActiveOrders" layoutX="20.0" layoutY="35.0" text="34" textFill="#1a1d2b">
+            <font><Font name="System Bold" size="24.0" /></font>
+        </Label>
+        <Label layoutX="20.0" layoutY="75.0" text="Ready for dispatch" textFill="#3498db">
+            <font><Font size="12.0" /></font>
+        </Label>
+    </AnchorPane>
+
+    <AnchorPane layoutX="520.0" layoutY="100.0" prefHeight="110.0" prefWidth="190.0">
+        <Rectangle arcHeight="20" arcWidth="20" fill="WHITE" height="110.0" stroke="#e0e0e0" strokeType="INSIDE" width="190.0" />
+        <Label layoutX="20.0" layoutY="15.0" text="TOTAL PRODUCTS" textFill="#5a5c6e">
+            <font><Font name="System Bold" size="12.0" /></font>
+        </Label>
+        <Label fx:id="lblTotalProducts" layoutX="20.0" layoutY="35.0" text="0" textFill="#1a1d2b">
+            <font><Font name="System Bold" size="24.0" /></font>
+        </Label>
+        <Label layoutX="20.0" layoutY="75.0" text="+ Active items" textFill="#9b59b6">
+            <font><Font size="12.0" /></font>
+        </Label>
+    </AnchorPane>
+
+    <AnchorPane layoutX="730.0" layoutY="100.0" prefHeight="110.0" prefWidth="190.0">
+        <Rectangle arcHeight="20" arcWidth="20" fill="WHITE" height="110.0" stroke="#e0e0e0" strokeType="INSIDE" width="190.0" />
+        <Label layoutX="20.0" layoutY="15.0" text="ITEMS SOLD" textFill="#5a5c6e">
+            <font><Font name="System Bold" size="12.0" /></font>
+        </Label>
+        <Label fx:id="lblItemsSold" layoutX="20.0" layoutY="35.0" text="136" textFill="#1a1d2b">
+            <font><Font name="System Bold" size="24.0" /></font>
+        </Label>
+        <Label layoutX="20.0" layoutY="75.0" text="Stock status: Good" textFill="#e67e22">
+            <font><Font size="12.0" /></font>
+        </Label>
+    </AnchorPane>
+
+    <AnchorPane layoutX="40.0" layoutY="240.0" prefHeight="420.0" prefWidth="670.0">
+        <Rectangle arcHeight="20" arcWidth="20" fill="WHITE" height="420.0" stroke="#e0e0e0" strokeType="INSIDE" width="670.0" />
+        <Label layoutX="20.0" layoutY="15.0" text="Revenue Analytics" textFill="#1a1d2b">
+            <font><Font name="System Bold" size="16.0" /></font>
+        </Label>
+
+        <BarChart fx:id="revenueChart" layoutX="10.0" layoutY="40.0" prefHeight="360.0" prefWidth="640.0">
+            <xAxis>
+                <CategoryAxis side="BOTTOM" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis side="LEFT" />
+            </yAxis>
+        </BarChart>
+    </AnchorPane>
+
+    <AnchorPane layoutX="730.0" layoutY="240.0" prefHeight="420.0" prefWidth="190.0">
+        <Rectangle arcHeight="20" arcWidth="20" fill="WHITE" height="420.0" stroke="#e0e0e0" strokeType="INSIDE" width="190.0" />
+        <Label layoutX="15.0" layoutY="20.0" text="Monthly Target" textFill="#1a1d2b">
+            <font><Font name="System Bold" size="14.0" /></font>
+        </Label>
+        <Rectangle arcHeight="10" arcWidth="10" fill="#e0e0e0" height="10.0" layoutX="15.0" layoutY="50.0" width="160.0" />
+        <Rectangle arcHeight="10" arcWidth="10" fill="#3498db" height="10.0" layoutX="15.0" layoutY="50.0" width="90.0" />
+        <Label layoutX="15.0" layoutY="65.0" text="LKR 1.2M" textFill="#3498db">
+            <font><Font size="11.0" /></font>
+        </Label>
+        <Label layoutX="150.0" layoutY="65.0" text="56%" textFill="#5a5c6e">
+            <font><Font size="11.0" /></font>
+        </Label>
+    </AnchorPane>
+
+</AnchorPane>

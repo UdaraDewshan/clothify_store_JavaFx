@@ -13,13 +13,13 @@ import lombok.*;
 public class Product {
     @Id
     private String productId;
-
     private String name;
     private String category;
-    private int size;
-    private Double price;
+    private String size;
+    private Double buyingPrice;
+    private Double sellingPrice;
+    private Double profit;
     private int qty;
     private String supplierId;
-
     private String imagePath;
 }

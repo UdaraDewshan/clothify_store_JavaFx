@@ -5,5 +5,15 @@
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">++++</property>
 
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">true</property>
+
+        <mapping class="model.entity.User"/>
+        <mapping class="model.entity.Product"/>
+        <mapping class="model.entity.Customer"/>
+        <mapping class="model.entity.Order"/>
+        <mapping class="model.entity.OrderDetail"/>
+        <mapping class="model.entity.Supplier"/>
     </session-factory>
 </hibernate-configuration>

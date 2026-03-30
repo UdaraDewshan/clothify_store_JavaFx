@@ -1,54 +1,88 @@
 package controller;
 
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 
 public class AddItemFormController {
 
     @FXML
-    private JFXComboBox<?> cmbSupplier;
+    private ComboBox<String> cmbCategory;
+
+    @FXML
+    private ComboBox<String> cmbSupplier;
+
+    @FXML
+    private TableColumn<?, ?> colBuy;
+
+    @FXML
+    private TableColumn<?, ?> colCategory;
+
+    @FXML
+    private TableColumn<?, ?> colCode;
+
+    @FXML
+    private TableColumn<?, ?> colDescription;
+
+    @FXML
+    private TableColumn<?, ?> colProfit;
+
+    @FXML
+    private TableColumn<?, ?> colQty;
+
+    @FXML
+    private TableColumn<?, ?> colSell;
+
+    @FXML
+    private TableColumn<?, ?> colSupplier;
+
+    @FXML
+    private Label lblStatus;
 
     @FXML
     private TableView<?> tblItems;
 
     @FXML
-    private JFXTextField txtBuying;
+    private TextField txtBuying;
 
     @FXML
-    private JFXTextField txtCode;
+    private TextField txtCode;
 
     @FXML
-    private JFXTextField txtDescription;
+    private TextField txtDescription;
 
     @FXML
-    private JFXTextField txtProfit;
+    private TextField txtProfit;
 
     @FXML
-    private JFXTextField txtQty;
+    private TextField txtQty;
 
     @FXML
-    private JFXTextField txtSelling;
+    private TextField txtSelling;
 
     @FXML
-    private JFXTextField txtSize;
-
-    @FXML
-    private JFXTextField txtSupplierName;
-
-    @FXML
-    private JFXTextField txtType;
+    private TextField txtSize;
 
     @FXML
     void addItem(ActionEvent event) {
-
+        System.out.println("Add Item Clicked!");
     }
 
     @FXML
     void clearFields(ActionEvent event) {
-
+        txtCode.clear();
+        txtDescription.clear();
+        txtQty.clear();
+        txtBuying.clear();
+        txtSelling.clear();
+        txtSize.clear();
+        txtProfit.clear();
+        cmbCategory.getSelectionModel().clearSelection();
+        cmbSupplier.getSelectionModel().clearSelection();
     }
 
 }

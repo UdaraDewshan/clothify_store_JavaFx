@@ -29,8 +29,8 @@ public class DashboardFormController {
 
     @FXML
     void btnInventoryOnAction(ActionEvent event) {
-        // loadUI("InventoryForm.fxml");
-        System.out.println("Inventory Clicked! (UI not created yet)");
+        System.out.println("Loading Inventory...");
+        loadUI("AddItemForm.fxml");
     }
 
     @FXML

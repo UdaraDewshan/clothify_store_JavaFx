@@ -77,14 +77,13 @@ public class LoginPageController {
         try {
             System.out.println("Login Success! Navigating to Dashboard as: " + role);
 
-            /*
             Stage stage = new Stage();
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/DashboardForm.fxml"))));
             Stage currentStage = (Stage) btnLogin.getScene().getWindow();
             currentStage.close();
             stage.show();
             stage.setTitle("Clothify Dashboard - " + role);
-            */
+
         } catch (Exception e) {
             e.printStackTrace();
         }

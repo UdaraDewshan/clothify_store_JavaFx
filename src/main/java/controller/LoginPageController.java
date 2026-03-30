@@ -44,7 +44,7 @@ public class LoginPageController {
     @FXML
     void onSignUp(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/SingUpPage.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/SignUpPage.fxml"))));
         Stage stage1 = (Stage) linkSignUp.getScene().getWindow();
         stage1.close();
         stage.show();

@@ -21,9 +21,6 @@ import java.io.IOException;
 public class SignUpPageController {
 
     @FXML
-    private PasswordField NameField;
-
-    @FXML
     private TextField addressField;
 
     @FXML
@@ -34,6 +31,9 @@ public class SignUpPageController {
 
     @FXML
     private Hyperlink linkSingIn;
+
+    @FXML
+    private TextField nameField;
 
     @FXML
     private PasswordField passwordField;
@@ -49,7 +49,7 @@ public class SignUpPageController {
 
     @FXML
     void onSingUpAction(ActionEvent event) {
-        String name = NameField.getText();
+        String name = nameField.getText();
         String address = addressField.getText();
         String joinDate = joinDateField.getText();
         String phoneNo = phoneNoField.getText();
@@ -58,7 +58,7 @@ public class SignUpPageController {
 
         if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
             statusLabel.setTextFill(Color.RED);
-            statusLabel.setText("Please fill all the required fields!");
+            statusLabel.setText("Please fill Name, Email and Password!");
             return;
         }
 
@@ -102,9 +102,8 @@ public class SignUpPageController {
         }
     }
 
-    // Fields clear කරන method එක
     private void clearFields() {
-        NameField.clear();
+        nameField.clear();
         addressField.clear();
         joinDateField.clear();
         phoneNoField.clear();
@@ -113,12 +112,19 @@ public class SignUpPageController {
     }
 
     @FXML
-    void switchToLogin(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/LoginPage.fxml"))));
-        Stage stage1 = (Stage) linkSingIn.getScene().getWindow();
-        stage1.close();
-        stage.show();
-        stage.setTitle("Sign In");
+    void switchToLogin(ActionEvent event) {
+        try {
+            Stage stage = new Stage();
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/LoginPage.fxml"))));
+            Stage currentStage = (Stage) linkSingIn.getScene().getWindow();
+            currentStage.close();
+            stage.show();
+            stage.setTitle("Sign In");
+        } catch (IOException e) {
+            e.printStackTrace();
+            statusLabel.setTextFill(Color.RED);
+            statusLabel.setText("Error loading Login Page!");
+        }
     }
+
 }

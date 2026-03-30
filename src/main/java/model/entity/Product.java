@@ -1,9 +1,8 @@
 package model.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.*;
-
-import java.nio.file.Path;
 
 @Setter
 @Getter
@@ -12,12 +11,15 @@ import java.nio.file.Path;
 @ToString
 @Entity
 public class Product {
+    @Id
     private String productId;
+
     private String name;
     private String category;
     private int size;
     private Double price;
     private int qty;
     private String supplierId;
-    private Path image;
+
+    private String imagePath;
 }

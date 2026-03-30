@@ -12,6 +12,7 @@ import model.entity.Product;
 import model.entity.Supplier;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import util.HibernateUtil;
 
 import java.net.URL;
@@ -44,6 +45,9 @@ public class AddItemFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        generateNextProductId();
+
         cmbCategory.setItems(FXCollections.observableArrayList(
                 "Men's Wear", "Women's Wear", "Kids", "Accessories", "Footwear"
         ));
@@ -63,6 +67,27 @@ public class AddItemFormController implements Initializable {
         loadSuppliers();
         loadTableData();
     }
+
+    //Auto ID Generation
+    private void generateNextProductId() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Product> query = session.createQuery("FROM Product ORDER BY productId DESC", Product.class);
+            query.setMaxResults(1);
+            Product lastProduct = query.uniqueResult();
+
+            if (lastProduct != null) {
+                String lastId = lastProduct.getProductId();
+                int nextIdNum = Integer.parseInt(lastId.replace("P", "")) + 1;
+                txtCode.setText(String.format("P%03d", nextIdNum));
+            } else {
+                txtCode.setText("P001");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            txtCode.setText("P001");
+        }
+    }
+    // ----------------------------------------------------------------------
 
     private void calculateProfit() {
         try {
@@ -133,6 +158,7 @@ public class AddItemFormController implements Initializable {
 
                 loadTableData();
                 clearFields(null);
+
             }
 
         } catch (NumberFormatException e) {
@@ -147,7 +173,6 @@ public class AddItemFormController implements Initializable {
 
     @FXML
     void clearFields(ActionEvent event) {
-        txtCode.clear();
         txtDescription.clear();
         txtQty.clear();
         txtBuying.clear();
@@ -157,7 +182,8 @@ public class AddItemFormController implements Initializable {
         cmbCategory.getSelectionModel().clearSelection();
         cmbSupplier.getSelectionModel().clearSelection();
 
-
         if(event != null) lblStatus.setText("");
+
+        generateNextProductId();
     }
 }

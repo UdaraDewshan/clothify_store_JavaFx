@@ -80,6 +80,21 @@ public class EmployeeFormController implements Initializable {
             return;
         }
 
+        String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        String phoneRegex = "^0\\d{9}$";
+
+        if (!txtEmail.getText().matches(emailRegex)) {
+            lblStatus.setTextFill(Color.RED);
+            lblStatus.setText("Invalid Email Format! (e.g. name@clothify.com)");
+            return;
+        }
+
+        if (!txtPhone.getText().matches(phoneRegex)) {
+            lblStatus.setTextFill(Color.RED);
+            lblStatus.setText("Invalid Phone Number! (Must be 10 digits starting with 0)");
+            return;
+        }
+
         User user = new User();
         user.setName(txtName.getText());
         user.setUsername(txtEmail.getText());
@@ -112,6 +127,21 @@ public class EmployeeFormController implements Initializable {
         if (txtHiddenId.getText().isEmpty()) {
             lblStatus.setTextFill(Color.RED);
             lblStatus.setText("Please select an employee from the table to update!");
+            return;
+        }
+
+        String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        String phoneRegex = "^0\\d{9}$";
+
+        if (!txtEmail.getText().matches(emailRegex)) {
+            lblStatus.setTextFill(Color.RED);
+            lblStatus.setText("Invalid Email Format! (e.g. name@clothify.com)");
+            return;
+        }
+
+        if (!txtPhone.getText().matches(phoneRegex)) {
+            lblStatus.setTextFill(Color.RED);
+            lblStatus.setText("Invalid Phone Number! (Must be 10 digits starting with 0)");
             return;
         }
 

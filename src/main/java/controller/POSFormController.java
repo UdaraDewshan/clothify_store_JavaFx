@@ -207,6 +207,14 @@ public class POSFormController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Order Placed Successfully!");
             alert.show();
 
+            double subTotal = 0;
+            for (CartTm tm : cartList) {
+                subTotal += tm.getTotal();
+            }
+            double discount = subTotal * 0.05;
+
+            util.PdfGenerator.generateBill(orderId, cartList, subTotal, discount, netTotal);
+            
             cartList.clear();
             calculateTotal();
             generateNextOrderId();

@@ -89,6 +89,21 @@ public class SupplierFormController implements Initializable {
             return;
         }
 
+        String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        String phoneRegex = "^0\\d{9}$";
+
+        if (!txtEmail.getText().matches(emailRegex)) {
+            lblStatus.setTextFill(Color.RED);
+            lblStatus.setText("Invalid Email Format!");
+            return;
+        }
+
+        if (!txtContact.getText().matches(phoneRegex)) {
+            lblStatus.setTextFill(Color.RED);
+            lblStatus.setText("Invalid Contact Number! (Must be 10 digits)");
+            return;
+        }
+
         Supplier supplier = new Supplier(id, name, company, email, contact);
         Transaction transaction = null;
 

@@ -127,6 +127,12 @@ public class AddItemFormController implements Initializable {
             double sellingPrice = Double.parseDouble(txtSelling.getText());
             double profit = Double.parseDouble(txtProfit.getText());
 
+            if (qty <= 0 || buyingPrice <= 0 || sellingPrice <= 0) {
+                lblStatus.setTextFill(Color.RED);
+                lblStatus.setText("Prices and Quantity must be greater than Zero!");
+                return;
+            }
+
             String supplier = cmbSupplier.getValue();
             String supplierId = (supplier != null) ? supplier.split(" - ")[0] : "Unknown";
 
@@ -169,6 +175,12 @@ public class AddItemFormController implements Initializable {
             double buyingPrice = Double.parseDouble(txtBuying.getText());
             double sellingPrice = Double.parseDouble(txtSelling.getText());
             double profit = Double.parseDouble(txtProfit.getText());
+
+            if (qty <= 0 || buyingPrice <= 0 || sellingPrice <= 0) {
+                lblStatus.setTextFill(Color.RED);
+                lblStatus.setText("Prices and Quantity must be greater than Zero!");
+                return;
+            }
 
             String supplier = cmbSupplier.getValue();
             String supplierId = (supplier != null) ? supplier.split(" - ")[0] : "Unknown";

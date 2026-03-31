@@ -57,19 +57,15 @@ public class AddItemFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // 1. අලුත් ID එකක් හදනවා
         generateNextProductId();
 
-        // 2. Categories ටික දානවා
         cmbCategory.setItems(FXCollections.observableArrayList(
                 "Men's Wear", "Women's Wear", "Kids", "Accessories", "Footwear"
         ));
 
-        // 3. Profit එක Auto හැදෙන්න Listeners දානවා
         txtBuying.textProperty().addListener((obs, oldVal, newVal) -> calculateProfit());
         txtSelling.textProperty().addListener((obs, oldVal, newVal) -> calculateProfit());
 
-        // 4. Table Columns ටික Map කරනවා
         colCode.setCellValueFactory(new PropertyValueFactory<>("productId"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("name"));
         colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
@@ -82,7 +78,6 @@ public class AddItemFormController implements Initializable {
         loadSuppliers();
         loadTableData();
 
-        // 5. Table එකේ Row එකක් Click කරාම ඒකෙ Data උඩ Fields වලට එන්න හදනවා
         tblItems.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 populateFieldsForUpdate(newSelection);
@@ -90,7 +85,6 @@ public class AddItemFormController implements Initializable {
         });
     }
 
-    // --- Table එක Click කරාම Data උඩට ගන්න Method එක ---
     private void populateFieldsForUpdate(Product product) {
         txtCode.setText(product.getProductId());
         txtDescription.setText(product.getName());
@@ -101,7 +95,6 @@ public class AddItemFormController implements Initializable {
         txtSelling.setText(String.valueOf(product.getSellingPrice()));
         txtProfit.setText(String.valueOf(product.getProfit()));
 
-        // Supplier ව Dropdown එකෙන් තෝරනවා (උදා: S001 න් පටන්ගන්න එක හොයලා select කරනවා)
         for (String s : cmbSupplier.getItems()) {
             if (s.startsWith(product.getSupplierId() + " -")) {
                 cmbSupplier.setValue(s);
@@ -109,7 +102,6 @@ public class AddItemFormController implements Initializable {
             }
         }
 
-        // පින්තූරය පෙන්නනවා
         if (product.getImagePath() != null && !product.getImagePath().isEmpty()) {
             selectedImagePath = product.getImagePath();
             try {
@@ -123,7 +115,6 @@ public class AddItemFormController implements Initializable {
         }
     }
 
-    // --- Product එකක් Save කිරීම ---
     @FXML
     void addItem(ActionEvent event) {
         try {
@@ -144,7 +135,6 @@ public class AddItemFormController implements Initializable {
                 lblStatus.setText("Please fill all required fields!");
                 return;
             }
-
             Product product = new Product(id, name, category, size, buyingPrice, sellingPrice, profit, qty, supplierId, selectedImagePath);
 
             Transaction transaction = null;
@@ -155,7 +145,6 @@ public class AddItemFormController implements Initializable {
 
                 lblStatus.setTextFill(Color.GREEN);
                 lblStatus.setText("Product Added Successfully!");
-
                 loadTableData();
                 clearFields(null);
             }
@@ -169,7 +158,6 @@ public class AddItemFormController implements Initializable {
         }
     }
 
-    // --- Product එකක් Update කිරීම ---
     @FXML
     void updateItem(ActionEvent event) {
         try {
@@ -196,7 +184,7 @@ public class AddItemFormController implements Initializable {
             Transaction transaction = null;
             try (Session session = HibernateUtil.getSessionFactory().openSession()) {
                 transaction = session.beginTransaction();
-                session.update(product); // Save වෙනුවට Update කරනවා
+                session.update(product);
                 transaction.commit();
 
                 lblStatus.setTextFill(Color.GREEN);
@@ -212,12 +200,10 @@ public class AddItemFormController implements Initializable {
         }
     }
 
-    // --- Product එකක් Delete කිරීම ---
     @FXML
     void deleteItem(ActionEvent event) {
         String id = txtCode.getText();
 
-        // Table එකෙන් මුකුත් Select කරලා නැත්තම් Delete වෙන්න දෙන්නෙ නෑ
         if (txtDescription.getText().isEmpty()) {
             lblStatus.setTextFill(Color.RED);
             lblStatus.setText("Please select a product from the table to delete!");
@@ -252,7 +238,6 @@ public class AddItemFormController implements Initializable {
         }
     }
 
-    // --- පින්තූරය තෝරන Method එක ---
     @FXML
     void chooseImage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -281,7 +266,6 @@ public class AddItemFormController implements Initializable {
         }
     }
 
-    // --- අලුත් Product ID එක හදන Method එක ---
     private void generateNextProductId() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Product> query = session.createQuery("FROM Product ORDER BY productId DESC", Product.class);
@@ -335,7 +319,6 @@ public class AddItemFormController implements Initializable {
         }
     }
 
-    // --- Fields හිස් කරන Method එක ---
     @FXML
     void clearFields(ActionEvent event) {
         txtDescription.clear();
@@ -351,8 +334,7 @@ public class AddItemFormController implements Initializable {
         selectedImagePath = null;
 
         if(event != null) lblStatus.setText("");
-
-        tblItems.getSelectionModel().clearSelection(); // Table එකේ Select කරපු එක අයින් කරනවා
-        generateNextProductId(); // ආයෙත් අලුත් ID එකක් දානවා
+        tblItems.getSelectionModel().clearSelection();
+        generateNextProductId();
     }
 }

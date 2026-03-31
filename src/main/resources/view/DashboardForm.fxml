@@ -18,19 +18,23 @@
 
                 <VBox layoutY="120.0" prefHeight="400.0" prefWidth="250.0" spacing="10.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#btnDashboardOnAction" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;" text="Dashboard">
+                        <Button fx:id="btnDashboard" mnemonicParsing="false" onAction="#btnDashboardOnAction" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;" text="Dashboard">
                             <font><Font name="System Bold" size="16.0" /></font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#btnPOSOnAction" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-text-fill: #a0aabf; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;" text="Point of Sale">
+
+                        <Button fx:id="btnPOS" mnemonicParsing="false" onAction="#btnPOSOnAction" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-text-fill: #a0aabf; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;" text="Point of Sale">
                             <font><Font name="System Bold" size="16.0" /></font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#btnInventoryOnAction" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-text-fill: #a0aabf; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;" text="Inventory">
+
+                        <Button fx:id="btnInventory" mnemonicParsing="false" onAction="#btnInventoryOnAction" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-text-fill: #a0aabf; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;" text="Inventory">
                             <font><Font name="System Bold" size="16.0" /></font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#btnSuppliersOnAction" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-text-fill: #a0aabf; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;" text="Suppliers">
+
+                        <Button fx:id="btnSuppliers" mnemonicParsing="false" onAction="#btnSuppliersOnAction" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-text-fill: #a0aabf; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;" text="Suppliers">
                             <font><Font name="System Bold" size="16.0" /></font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#btnReportsOnAction" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-text-fill: #a0aabf; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;" text="Reports">
+
+                        <Button fx:id="btnReports" mnemonicParsing="false" onAction="#btnReportsOnAction" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-text-fill: #a0aabf; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;" text="Reports">
                             <font><Font name="System Bold" size="16.0" /></font>
                         </Button>
                     </children>

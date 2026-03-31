@@ -35,7 +35,6 @@ public class DashboardFormController implements Initializable {
 
     @FXML
     void btnInventoryOnAction(ActionEvent event) {
-        System.out.println("Loading Inventory...");
         loadUI("AddItemForm.fxml");
     }
 
@@ -46,7 +45,7 @@ public class DashboardFormController implements Initializable {
 
     @FXML
     void btnSuppliersOnAction(ActionEvent event) {
-        System.out.println("Suppliers Clicked!");
+        loadUI("SupplierForm.fxml");
     }
 
     @FXML

@@ -26,8 +26,6 @@ public class DashboardFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadUI("OverviewForm.fxml");
-        setActiveButton(btnDashboard);
     }
 
     @FXML
@@ -90,5 +88,25 @@ public class DashboardFormController implements Initializable {
 
         String activeStyle = "-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;";
         activeButton.setStyle(activeStyle);
+    }
+
+    public void setRole(String role) {
+        if (role.equals("Admin")) {
+            loadUI("OverviewForm.fxml");
+            setActiveButton(btnDashboard);
+
+        } else if (role.equals("Staff")) {
+            loadUI("POSForm.fxml");
+            setActiveButton(btnPOS);
+
+            btnDashboard.setVisible(false);
+            btnDashboard.setManaged(false);
+
+            btnReports.setVisible(false);
+            btnReports.setManaged(false);
+
+            btnSuppliers.setVisible(false);
+            btnSuppliers.setManaged(false);
+        }
     }
 }

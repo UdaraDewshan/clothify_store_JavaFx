@@ -3,6 +3,7 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -77,8 +78,14 @@ public class LoginPageController {
         try {
             System.out.println("Login Success! Navigating to Dashboard as: " + role);
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DashboardForm.fxml"));
+            Parent root = loader.load();
+
+            DashboardFormController controller = loader.getController();
+            controller.setRole(role);
+
             Stage stage = new Stage();
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/DashboardForm.fxml"))));
+            stage.setScene(new Scene(root));
             Stage currentStage = (Stage) btnLogin.getScene().getWindow();
             currentStage.close();
             stage.show();

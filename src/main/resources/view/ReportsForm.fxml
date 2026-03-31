@@ -3,71 +3,82 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="700.0" prefWidth="950.0" style="-fx-background-color: #f4f5f9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportsFormController">
 
-    <Text fill="#1a1d2b" layoutX="50.0" layoutY="60.0" text="Reports Center">
+    <Text fill="#111827" layoutX="50.0" layoutY="75.0" text="Analytics &amp; Insights">
         <font>
-            <Font name="Berlin Sans FB Demi Bold" size="32.0" />
+            <Font name="System Bold" size="36.0" />
         </font>
     </Text>
-    <Label layoutX="50.0" layoutY="70.0" text="Generate and export business analytics." textFill="#7d8597">
-        <font><Font size="14.0" /></font>
+    <Label layoutX="50.0" layoutY="90.0" text="Real-time performance metrics and exportable business reports." textFill="#6b7280">
+        <font><Font size="15.0" /></font>
     </Label>
 
-    <Label layoutX="380.0" layoutY="140.0" text="Select a Report to Generate" textFill="#1a1d2b">
-        <font><Font name="System Bold" size="16.0" /></font>
-    </Label>
+    <AnchorPane layoutX="50.0" layoutY="160.0" prefHeight="220.0" prefWidth="400.0" style="-fx-background-color: linear-gradient(to bottom right, #ff758c, #ff7eb3); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(255, 117, 140, 0.4), 20, 0, 0, 10);">
 
-    <AnchorPane layoutX="100.0" layoutY="190.0" prefHeight="200.0" prefWidth="350.0">
-        <Rectangle arcHeight="30" arcWidth="30" fill="WHITE" height="200.0" stroke="#d1d5db" strokeType="INSIDE" width="350.0" />
-        <Rectangle arcHeight="20" arcWidth="20" fill="#e3f2fd" height="40.0" layoutX="50.0" layoutY="20.0" width="250.0" />
-        <Label layoutX="110.0" layoutY="75.0" text="Daily Sales Summary" textFill="#1a1d2b">
-            <font><Font name="System Bold" size="16.0" /></font>
+        <Label layoutX="30.0" layoutY="30.0" text="Daily Sales" textFill="WHITE">
+            <font><Font name="System Bold" size="26.0" /></font>
         </Label>
-        <Label alignment="CENTER" layoutX="30.0" layoutY="105.0" prefWidth="290.0" text="View total transactions and daily revenue." textAlignment="CENTER" textFill="#7d8597" wrapText="true" />
-        <Button layoutX="110.0" layoutY="140.0" onAction="#btnDailySalesOnAction" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: transparent; -fx-border-color: #3b82f6; -fx-text-fill: #3b82f6; -fx-border-radius: 5; -fx-cursor: hand;" text="Generate Report">
-            <font><Font name="System Bold" size="12.0" /></font>
-        </Button>
+        <Label layoutX="30.0" layoutY="75.0" prefWidth="280.0" text="Track today's total transactions and generated revenue in real-time." textFill="#ffffffcc" wrapText="true">
+            <font><Font size="14.0" /></font>
+        </Label>
+
+        <Button layoutX="30.0" layoutY="150.0" onAction="#btnDailySalesOnAction" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: rgba(255,255,255,0.25); -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 14px;" text="Generate Report" />
+
+        <Label layoutX="280.0" layoutY="50.0" opacity="0.15" text="\$" textFill="WHITE">
+            <font><Font name="System Bold" size="110.0" /></font>
+        </Label>
     </AnchorPane>
 
-    <AnchorPane layoutX="500.0" layoutY="190.0" prefHeight="200.0" prefWidth="350.0">
-        <Rectangle arcHeight="30" arcWidth="30" fill="WHITE" height="200.0" stroke="#d1d5db" strokeType="INSIDE" width="350.0" />
-        <Rectangle arcHeight="20" arcWidth="20" fill="#e8f5e9" height="40.0" layoutX="50.0" layoutY="20.0" width="250.0" />
-        <Label layoutX="115.0" layoutY="75.0" text="Monthly Revenue" textFill="#1a1d2b">
-            <font><Font name="System Bold" size="16.0" /></font>
+    <AnchorPane layoutX="490.0" layoutY="160.0" prefHeight="220.0" prefWidth="400.0" style="-fx-background-color: linear-gradient(to bottom right, #4facfe, #00f2fe); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(79, 172, 254, 0.4), 20, 0, 0, 10);">
+
+        <Label layoutX="30.0" layoutY="30.0" text="Monthly Revenue" textFill="WHITE">
+            <font><Font name="System Bold" size="26.0" /></font>
         </Label>
-        <Label alignment="CENTER" layoutX="30.0" layoutY="105.0" prefWidth="290.0" text="Analyze monthly growth and sales trends." textAlignment="CENTER" textFill="#7d8597" wrapText="true" />
-        <Button layoutX="110.0" layoutY="140.0" onAction="#btnMonthlyRevenueOnAction" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: transparent; -fx-border-color: #3b82f6; -fx-text-fill: #3b82f6; -fx-border-radius: 5; -fx-cursor: hand;" text="Generate Report">
-            <font><Font name="System Bold" size="12.0" /></font>
-        </Button>
+        <Label layoutX="30.0" layoutY="75.0" prefWidth="280.0" text="Analyze monthly growth, profit margins, and overall sales trends." textFill="#ffffffcc" wrapText="true">
+            <font><Font size="14.0" /></font>
+        </Label>
+
+        <Button layoutX="30.0" layoutY="150.0" onAction="#btnMonthlyRevenueOnAction" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: rgba(255,255,255,0.25); -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 14px;" text="Generate Report" />
+
+        <Label layoutX="260.0" layoutY="50.0" opacity="0.15" text="\%" textFill="WHITE">
+            <font><Font name="System Bold" size="110.0" /></font>
+        </Label>
     </AnchorPane>
 
-    <AnchorPane layoutX="100.0" layoutY="420.0" prefHeight="200.0" prefWidth="350.0">
-        <Rectangle arcHeight="30" arcWidth="30" fill="WHITE" height="200.0" stroke="#d1d5db" strokeType="INSIDE" width="350.0" />
-        <Rectangle arcHeight="20" arcWidth="20" fill="#fff3e0" height="40.0" layoutX="50.0" layoutY="20.0" width="250.0" />
-        <Label layoutX="120.0" layoutY="75.0" text="Inventory Status" textFill="#1a1d2b">
-            <font><Font name="System Bold" size="16.0" /></font>
+    <AnchorPane layoutX="50.0" layoutY="420.0" prefHeight="220.0" prefWidth="400.0" style="-fx-background-color: linear-gradient(to bottom right, #11998e, #38ef7d); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(17, 153, 142, 0.4), 20, 0, 0, 10);">
+
+        <Label layoutX="30.0" layoutY="30.0" text="Inventory Status" textFill="WHITE">
+            <font><Font name="System Bold" size="26.0" /></font>
         </Label>
-        <Label alignment="CENTER" layoutX="30.0" layoutY="105.0" prefWidth="290.0" text="Identify total items, stock value, and status." textAlignment="CENTER" textFill="#7d8597" wrapText="true" />
-        <Button layoutX="110.0" layoutY="140.0" onAction="#btnInventoryReportOnAction" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="Generate Report">
-            <font><Font name="System Bold" size="12.0" /></font>
-        </Button>
+        <Label layoutX="30.0" layoutY="75.0" prefWidth="280.0" text="Identify best-performing items, check stock levels, and estimated stock value." textFill="#ffffffcc" wrapText="true">
+            <font><Font size="14.0" /></font>
+        </Label>
+
+        <Button layoutX="30.0" layoutY="150.0" onAction="#btnInventoryReportOnAction" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: rgba(255,255,255,0.25); -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 14px;" text="Generate Report" />
+
+        <Label layoutX="270.0" layoutY="50.0" opacity="0.15" text="#" textFill="WHITE">
+            <font><Font name="System Bold" size="110.0" /></font>
+        </Label>
     </AnchorPane>
 
-    <AnchorPane layoutX="500.0" layoutY="420.0" prefHeight="200.0" prefWidth="350.0">
-        <Rectangle arcHeight="30" arcWidth="30" fill="WHITE" height="200.0" stroke="#d1d5db" strokeType="INSIDE" width="350.0" />
-        <Rectangle arcHeight="20" arcWidth="20" fill="#f3e5f5" height="40.0" layoutX="50.0" layoutY="20.0" width="250.0" />
-        <Label layoutX="105.0" layoutY="75.0" text="Supplier Contact List" textFill="#1a1d2b">
-            <font><Font name="System Bold" size="16.0" /></font>
+    <AnchorPane layoutX="490.0" layoutY="420.0" prefHeight="220.0" prefWidth="400.0" style="-fx-background-color: linear-gradient(to bottom right, #b224ef, #7579ff); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(178, 36, 239, 0.4), 20, 0, 0, 10);">
+
+        <Label layoutX="30.0" layoutY="30.0" text="Supplier Network" textFill="WHITE">
+            <font><Font name="System Bold" size="26.0" /></font>
         </Label>
-        <Label alignment="CENTER" layoutX="30.0" layoutY="105.0" prefWidth="290.0" text="Export a complete list of active suppliers." textAlignment="CENTER" textFill="#7d8597" wrapText="true" />
-        <Button layoutX="110.0" layoutY="140.0" onAction="#btnSupplierReportOnAction" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: transparent; -fx-border-color: #3b82f6; -fx-text-fill: #3b82f6; -fx-border-radius: 5; -fx-cursor: hand;" text="Generate Report">
-            <font><Font name="System Bold" size="12.0" /></font>
-        </Button>
+        <Label layoutX="30.0" layoutY="75.0" prefWidth="280.0" text="Export a complete list of active suppliers and contact details for restocks." textFill="#ffffffcc" wrapText="true">
+            <font><Font size="14.0" /></font>
+        </Label>
+
+        <Button layoutX="30.0" layoutY="150.0" onAction="#btnSupplierReportOnAction" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: rgba(255,255,255,0.25); -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 14px;" text="Generate Report" />
+
+        <Label layoutX="260.0" layoutY="50.0" opacity="0.15" text="\@" textFill="WHITE">
+            <font><Font name="System Bold" size="110.0" /></font>
+        </Label>
     </AnchorPane>
 
 </AnchorPane>

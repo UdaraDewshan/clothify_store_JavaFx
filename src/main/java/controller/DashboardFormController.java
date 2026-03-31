@@ -40,7 +40,7 @@ public class DashboardFormController implements Initializable {
 
     @FXML
     void btnReportsOnAction(ActionEvent event) {
-        System.out.println("Reports Clicked!");
+        loadUI("ReportsForm.fxml");
     }
 
     @FXML

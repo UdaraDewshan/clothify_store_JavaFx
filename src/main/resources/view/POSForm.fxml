@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="700.0" prefWidth="950.0" style="-fx-background-color: #f4f5f9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.POSFormController">
+
+    <Text fill="#1a1d2b" layoutX="30.0" layoutY="45.0" text="Point of Sale">
+        <font><Font name="Berlin Sans FB Demi Bold" size="28.0" /></font>
+    </Text>
+
+    <TextField layoutX="30.0" layoutY="65.0" prefHeight="35.0" prefWidth="300.0" promptText="Search products by name or code..." style="-fx-background-radius: 20; -fx-padding: 5 15; -fx-border-color: #d1d5db; -fx-border-radius: 20;" />
+
+    <ScrollPane layoutX="30.0" layoutY="120.0" prefHeight="550.0" prefWidth="560.0" style="-fx-background-color: transparent; -fx-background: #f4f5f9; -fx-border-color: transparent;">
+        <content>
+            <GridPane fx:id="gridProducts" hgap="15.0" vgap="15.0">
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+            </GridPane>
+        </content>
+    </ScrollPane>
+
+    <AnchorPane layoutX="610.0" layoutY="30.0" prefHeight="640.0" prefWidth="310.0">
+        <Rectangle arcHeight="20" arcWidth="20" fill="WHITE" height="640.0" stroke="#e0e0e0" strokeType="INSIDE" width="310.0" />
+
+        <Label layoutX="20.0" layoutY="20.0" text="Current Order" textFill="#1a1d2b">
+            <font><Font name="System Bold" size="18.0" /></font>
+        </Label>
+
+        <Label layoutX="20.0" layoutY="55.0" text="Order ID:" textFill="#7d8597">
+            <font><Font name="System Bold" size="12.0" /></font>
+        </Label>
+        <Label fx:id="lblOrderId" layoutX="80.0" layoutY="55.0" text="#ORD-001" textFill="#1a1d2b">
+            <font><Font name="System Bold" size="12.0" /></font>
+        </Label>
+
+        <TableView fx:id="tblCart" layoutX="10.0" layoutY="90.0" prefHeight="350.0" prefWidth="290.0" style="-fx-border-color: transparent; -fx-background-color: white;">
+            <columns>
+                <TableColumn fx:id="colName" prefWidth="110.0" text="Item" />
+                <TableColumn fx:id="colQty" prefWidth="40.0" text="Qty" />
+                <TableColumn fx:id="colTotal" prefWidth="80.0" text="Total" />
+                <TableColumn fx:id="colAction" prefWidth="50.0" text="Act" />
+            </columns>
+        </TableView>
+
+        <Rectangle fill="#f9fafb" height="180.0" layoutX="10.0" layoutY="450.0" width="290.0" />
+
+        <Label layoutX="20.0" layoutY="465.0" text="Subtotal" textFill="#5a5c6e">
+            <font><Font size="14.0" /></font>
+        </Label>
+        <Label fx:id="lblSubTotal" alignment="CENTER_RIGHT" layoutX="180.0" layoutY="465.0" prefWidth="100.0" text="LKR 0.00" textFill="#1a1d2b">
+            <font><Font name="System Bold" size="14.0" /></font>
+        </Label>
+
+        <Label layoutX="20.0" layoutY="495.0" text="Discount (5%)" textFill="#5a5c6e">
+            <font><Font size="14.0" /></font>
+        </Label>
+        <Label fx:id="lblDiscount" alignment="CENTER_RIGHT" layoutX="180.0" layoutY="495.0" prefWidth="100.0" text="LKR 0.00" textFill="#e74c3c">
+            <font><Font name="System Bold" size="14.0" /></font>
+        </Label>
+
+        <Rectangle fill="#e0e0e0" height="1.0" layoutX="20.0" layoutY="530.0" width="270.0" />
+
+        <Label layoutX="20.0" layoutY="545.0" text="Total" textFill="#1a1d2b">
+            <font><Font name="System Bold" size="18.0" /></font>
+        </Label>
+        <Label fx:id="lblNetTotal" alignment="CENTER_RIGHT" layoutX="130.0" layoutY="545.0" prefWidth="150.0" text="LKR 0.00" textFill="#3b82f6">
+            <font><Font name="System Bold" size="22.0" /></font>
+        </Label>
+
+        <Button layoutX="20.0" layoutY="585.0" onAction="#placeOrderOnAction" prefHeight="40.0" prefWidth="270.0" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;" text="Place Order">
+            <font><Font name="System Bold" size="16.0" /></font>
+        </Button>
+    </AnchorPane>
+</AnchorPane>

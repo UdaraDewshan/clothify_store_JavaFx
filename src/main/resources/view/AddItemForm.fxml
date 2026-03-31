@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="700.0" prefWidth="950.0" style="-fx-background-color: #f4f5f9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddItemFormController">
+<AnchorPane prefHeight="700.0" prefWidth="950.0" style="-fx-background-color: #f4f5f9;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddItemFormController">
 
     <Text fill="#3b82f6" layoutX="50.0" layoutY="55.0" text="Inventory Management">
         <font>
@@ -20,7 +20,7 @@
         </font>
     </Text>
 
-    <Rectangle arcHeight="30" arcWidth="30" fill="WHITE" height="300.0" layoutX="50" layoutY="80" stroke="#e0e0e0" strokeType="INSIDE" width="850.0" />
+    <Rectangle arcHeight="30" arcWidth="30" fill="WHITE" height="331.0" layoutX="50" layoutY="80" stroke="#e0e0e0" strokeType="INSIDE" width="850.0" />
 
     <Label layoutX="80" layoutY="120" text="Item Code" textFill="#5a5c6e">
         <font><Font name="System Bold" size="13.0" /></font>
@@ -68,7 +68,7 @@
     <TextField fx:id="txtProfit" editable="false" layoutX="470" layoutY="315" prefWidth="180" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5; -fx-background-color: #f9fafb;" />
 
 
-    <Rectangle arcHeight="15" arcWidth="15" fill="#f9fafb" height="150.0" layoutX="700.0" layoutY="115.0" stroke="#d1d5db" strokeType="INSIDE" strokeWidth="2.0" width="150.0" strokeDashArray="5,5" />
+    <Rectangle arcHeight="15" arcWidth="15" fill="#f9fafb" height="150.0" layoutX="700.0" layoutY="115.0" stroke="#d1d5db" strokeDashArray="5,5" strokeType="INSIDE" strokeWidth="2.0" width="150.0" />
     <Label layoutX="735.0" layoutY="180.0" text="No Image" textFill="#9ca3af" />
 
     <ImageView fx:id="imgProduct" fitHeight="140.0" fitWidth="140.0" layoutX="705.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true" />
@@ -77,16 +77,25 @@
         <font><Font name="System Bold" size="12.0" /></font>
     </Button>
 
-    <Button layoutX="680.0" layoutY="330.0" onAction="#clearFields" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;" text="Clear">
+    <Button layoutX="421.0" layoutY="364.0" onAction="#clearFields" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;" text="Clear">
         <font><Font name="System Bold" size="14.0" /></font>
     </Button>
-    <Button layoutX="770.0" layoutY="330.0" onAction="#addItem" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;" text="+ Add Product">
+
+    <Button layoutX="514.0" layoutY="364.0" onAction="#deleteItem" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;" text="Delete">
+        <font><Font name="System Bold" size="14.0" /></font>
+    </Button>
+
+    <Button layoutX="626.0" layoutY="364.0" onAction="#updateItem" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;" text="Update">
+        <font><Font name="System Bold" size="14.0" /></font>
+    </Button>
+
+    <Button layoutX="748.0" layoutY="364.0" onAction="#addItem" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;" text="+ Add Product">
         <font><Font name="System Bold" size="14.0" /></font>
     </Button>
 
     <Label fx:id="lblStatus" layoutX="50.0" layoutY="390.0" text="" textFill="RED" />
 
-    <TableView fx:id="tblItems" layoutX="50.0" layoutY="415.0" prefHeight="260" prefWidth="850" style="-fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;">
+    <TableView fx:id="tblItems" layoutX="50.0" layoutY="424.0" prefHeight="251.0" prefWidth="850" style="-fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;">
         <columns>
             <TableColumn fx:id="colCode" prefWidth="70" text="ID" />
             <TableColumn fx:id="colDescription" prefWidth="160" text="Product Name" />

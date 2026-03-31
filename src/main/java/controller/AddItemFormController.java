@@ -57,15 +57,19 @@ public class AddItemFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // 1. අලුත් ID එකක් හදනවා
         generateNextProductId();
 
+        // 2. Categories ටික දානවා
         cmbCategory.setItems(FXCollections.observableArrayList(
                 "Men's Wear", "Women's Wear", "Kids", "Accessories", "Footwear"
         ));
 
+        // 3. Profit එක Auto හැදෙන්න Listeners දානවා
         txtBuying.textProperty().addListener((obs, oldVal, newVal) -> calculateProfit());
         txtSelling.textProperty().addListener((obs, oldVal, newVal) -> calculateProfit());
 
+        // 4. Table Columns ටික Map කරනවා
         colCode.setCellValueFactory(new PropertyValueFactory<>("productId"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("name"));
         colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
@@ -77,8 +81,178 @@ public class AddItemFormController implements Initializable {
 
         loadSuppliers();
         loadTableData();
+
+        // 5. Table එකේ Row එකක් Click කරාම ඒකෙ Data උඩ Fields වලට එන්න හදනවා
+        tblItems.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                populateFieldsForUpdate(newSelection);
+            }
+        });
     }
 
+    // --- Table එක Click කරාම Data උඩට ගන්න Method එක ---
+    private void populateFieldsForUpdate(Product product) {
+        txtCode.setText(product.getProductId());
+        txtDescription.setText(product.getName());
+        cmbCategory.setValue(product.getCategory());
+        txtSize.setText(product.getSize());
+        txtQty.setText(String.valueOf(product.getQty()));
+        txtBuying.setText(String.valueOf(product.getBuyingPrice()));
+        txtSelling.setText(String.valueOf(product.getSellingPrice()));
+        txtProfit.setText(String.valueOf(product.getProfit()));
+
+        // Supplier ව Dropdown එකෙන් තෝරනවා (උදා: S001 න් පටන්ගන්න එක හොයලා select කරනවා)
+        for (String s : cmbSupplier.getItems()) {
+            if (s.startsWith(product.getSupplierId() + " -")) {
+                cmbSupplier.setValue(s);
+                break;
+            }
+        }
+
+        // පින්තූරය පෙන්නනවා
+        if (product.getImagePath() != null && !product.getImagePath().isEmpty()) {
+            selectedImagePath = product.getImagePath();
+            try {
+                imgProduct.setImage(new Image("file:" + selectedImagePath));
+            } catch (Exception e) {
+                imgProduct.setImage(null);
+            }
+        } else {
+            selectedImagePath = null;
+            imgProduct.setImage(null);
+        }
+    }
+
+    // --- Product එකක් Save කිරීම ---
+    @FXML
+    void addItem(ActionEvent event) {
+        try {
+            String id = txtCode.getText();
+            String name = txtDescription.getText();
+            String category = cmbCategory.getValue();
+            String size = txtSize.getText();
+            int qty = Integer.parseInt(txtQty.getText());
+            double buyingPrice = Double.parseDouble(txtBuying.getText());
+            double sellingPrice = Double.parseDouble(txtSelling.getText());
+            double profit = Double.parseDouble(txtProfit.getText());
+
+            String supplier = cmbSupplier.getValue();
+            String supplierId = (supplier != null) ? supplier.split(" - ")[0] : "Unknown";
+
+            if (name.isEmpty() || category == null || supplier == null) {
+                lblStatus.setTextFill(Color.RED);
+                lblStatus.setText("Please fill all required fields!");
+                return;
+            }
+
+            Product product = new Product(id, name, category, size, buyingPrice, sellingPrice, profit, qty, supplierId, selectedImagePath);
+
+            Transaction transaction = null;
+            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                transaction = session.beginTransaction();
+                session.save(product);
+                transaction.commit();
+
+                lblStatus.setTextFill(Color.GREEN);
+                lblStatus.setText("Product Added Successfully!");
+
+                loadTableData();
+                clearFields(null);
+            }
+        } catch (NumberFormatException e) {
+            lblStatus.setTextFill(Color.RED);
+            lblStatus.setText("Invalid Number Format! Check Prices & Qty.");
+        } catch (Exception e) {
+            lblStatus.setTextFill(Color.RED);
+            lblStatus.setText("Error saving product!");
+            e.printStackTrace();
+        }
+    }
+
+    // --- Product එකක් Update කිරීම ---
+    @FXML
+    void updateItem(ActionEvent event) {
+        try {
+            String id = txtCode.getText();
+            String name = txtDescription.getText();
+            String category = cmbCategory.getValue();
+            String size = txtSize.getText();
+            int qty = Integer.parseInt(txtQty.getText());
+            double buyingPrice = Double.parseDouble(txtBuying.getText());
+            double sellingPrice = Double.parseDouble(txtSelling.getText());
+            double profit = Double.parseDouble(txtProfit.getText());
+
+            String supplier = cmbSupplier.getValue();
+            String supplierId = (supplier != null) ? supplier.split(" - ")[0] : "Unknown";
+
+            if (name.isEmpty() || category == null) {
+                lblStatus.setTextFill(Color.RED);
+                lblStatus.setText("Please select a product to update!");
+                return;
+            }
+
+            Product product = new Product(id, name, category, size, buyingPrice, sellingPrice, profit, qty, supplierId, selectedImagePath);
+
+            Transaction transaction = null;
+            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                transaction = session.beginTransaction();
+                session.update(product); // Save වෙනුවට Update කරනවා
+                transaction.commit();
+
+                lblStatus.setTextFill(Color.GREEN);
+                lblStatus.setText("Product Updated Successfully!");
+
+                loadTableData();
+                clearFields(null);
+            }
+        } catch (Exception e) {
+            lblStatus.setTextFill(Color.RED);
+            lblStatus.setText("Error updating product!");
+            e.printStackTrace();
+        }
+    }
+
+    // --- Product එකක් Delete කිරීම ---
+    @FXML
+    void deleteItem(ActionEvent event) {
+        String id = txtCode.getText();
+
+        // Table එකෙන් මුකුත් Select කරලා නැත්තම් Delete වෙන්න දෙන්නෙ නෑ
+        if (txtDescription.getText().isEmpty()) {
+            lblStatus.setTextFill(Color.RED);
+            lblStatus.setText("Please select a product from the table to delete!");
+            return;
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete Product: " + id + "?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+            Transaction transaction = null;
+            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                transaction = session.beginTransaction();
+
+                Product product = session.get(Product.class, id);
+                if (product != null) {
+                    session.delete(product);
+                    transaction.commit();
+
+                    lblStatus.setTextFill(Color.GREEN);
+                    lblStatus.setText("Product Deleted Successfully!");
+
+                    loadTableData();
+                    clearFields(null);
+                }
+            } catch (Exception e) {
+                if (transaction != null) transaction.rollback();
+                lblStatus.setTextFill(Color.RED);
+                lblStatus.setText("Error deleting product!");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // --- පින්තූරය තෝරන Method එක ---
     @FXML
     void chooseImage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -93,15 +267,12 @@ public class AddItemFormController implements Initializable {
             try {
                 String fileName = System.currentTimeMillis() + "_" + selectedFile.getName();
                 Path destinationPath = Paths.get("saved_images", fileName);
-
                 Files.createDirectories(destinationPath.getParent());
-
                 Files.copy(selectedFile.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
 
                 selectedImagePath = destinationPath.toString();
                 Image image = new Image("file:" + selectedImagePath);
                 imgProduct.setImage(image);
-
             } catch (IOException e) {
                 e.printStackTrace();
                 lblStatus.setTextFill(Color.RED);
@@ -110,6 +281,7 @@ public class AddItemFormController implements Initializable {
         }
     }
 
+    // --- අලුත් Product ID එක හදන Method එක ---
     private void generateNextProductId() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Product> query = session.createQuery("FROM Product ORDER BY productId DESC", Product.class);
@@ -144,7 +316,6 @@ public class AddItemFormController implements Initializable {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             List<Supplier> suppliers = session.createQuery("FROM Supplier", Supplier.class).list();
             ObservableList<String> supplierList = FXCollections.observableArrayList();
-
             for (Supplier s : suppliers) {
                 supplierList.add(s.getSupplierId() + " - " + s.getName());
             }
@@ -164,52 +335,7 @@ public class AddItemFormController implements Initializable {
         }
     }
 
-    @FXML
-    void addItem(ActionEvent event) {
-        try {
-            String id = txtCode.getText();
-            String name = txtDescription.getText();
-            String category = cmbCategory.getValue();
-            String size = txtSize.getText();
-            int qty = Integer.parseInt(txtQty.getText());
-            double buyingPrice = Double.parseDouble(txtBuying.getText());
-            double sellingPrice = Double.parseDouble(txtSelling.getText());
-            double profit = Double.parseDouble(txtProfit.getText());
-
-            String supplier = cmbSupplier.getValue();
-            String supplierId = (supplier != null) ? supplier.split(" - ")[0] : "Unknown";
-
-            if (id.isEmpty() || name.isEmpty() || category == null) {
-                lblStatus.setTextFill(Color.RED);
-                lblStatus.setText("Please fill all required fields!");
-                return;
-            }
-
-            Product product = new Product(id, name, category, size, buyingPrice, sellingPrice, profit, qty, supplierId, selectedImagePath);
-
-            Transaction transaction = null;
-            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                transaction = session.beginTransaction();
-                session.save(product);
-                transaction.commit();
-
-                lblStatus.setTextFill(Color.GREEN);
-                lblStatus.setText("Product Added Successfully!");
-
-                loadTableData();
-                clearFields(null);
-            }
-
-        } catch (NumberFormatException e) {
-            lblStatus.setTextFill(Color.RED);
-            lblStatus.setText("Invalid Number Format! Check Prices & Qty.");
-        } catch (Exception e) {
-            lblStatus.setTextFill(Color.RED);
-            lblStatus.setText("Error saving product!");
-            e.printStackTrace();
-        }
-    }
-
+    // --- Fields හිස් කරන Method එක ---
     @FXML
     void clearFields(ActionEvent event) {
         txtDescription.clear();
@@ -225,6 +351,8 @@ public class AddItemFormController implements Initializable {
         selectedImagePath = null;
 
         if(event != null) lblStatus.setText("");
-        generateNextProductId();
+
+        tblItems.getSelectionModel().clearSelection(); // Table එකේ Select කරපු එක අයින් කරනවා
+        generateNextProductId(); // ආයෙත් අලුත් ID එකක් දානවා
     }
 }

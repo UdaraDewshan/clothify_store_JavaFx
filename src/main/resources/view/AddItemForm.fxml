@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -21,71 +22,80 @@
 
     <Rectangle arcHeight="30" arcWidth="30" fill="WHITE" height="300.0" layoutX="50" layoutY="80" stroke="#e0e0e0" strokeType="INSIDE" width="850.0" />
 
-    <Label layoutX="100" layoutY="120" text="Item Code" textFill="#5a5c6e">
-        <font><Font name="System Bold" size="14.0" /></font>
+    <Label layoutX="80" layoutY="120" text="Item Code" textFill="#5a5c6e">
+        <font><Font name="System Bold" size="13.0" /></font>
     </Label>
-    <TextField fx:id="txtCode" editable="false" layoutX="200" layoutY="115" prefWidth="180" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5;" />
+    <TextField fx:id="txtCode" editable="false" layoutX="170" layoutY="115" prefWidth="180" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5;" />
 
-    <Label layoutX="100" layoutY="170" text="Supplier" textFill="#5a5c6e">
-        <font><Font name="System Bold" size="14.0" /></font>
+    <Label layoutX="80" layoutY="170" text="Supplier" textFill="#5a5c6e">
+        <font><Font name="System Bold" size="13.0" /></font>
     </Label>
-    <ComboBox fx:id="cmbSupplier" layoutX="200" layoutY="165" prefWidth="180" style="-fx-padding: 5; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5; -fx-background-color: white;" />
+    <ComboBox fx:id="cmbSupplier" layoutX="170" layoutY="165" prefWidth="180" style="-fx-padding: 5; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5; -fx-background-color: white;" />
 
-    <Label layoutX="100" layoutY="220" text="Description" textFill="#5a5c6e">
-        <font><Font name="System Bold" size="14.0" /></font>
+    <Label layoutX="80" layoutY="220" text="Description" textFill="#5a5c6e">
+        <font><Font name="System Bold" size="13.0" /></font>
     </Label>
-    <TextField fx:id="txtDescription" layoutX="200" layoutY="215" prefWidth="250" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5;" />
+    <TextField fx:id="txtDescription" layoutX="170" layoutY="215" prefWidth="180" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5;" />
 
-    <Label layoutX="100" layoutY="270" text="Qty" textFill="#5a5c6e">
-        <font><Font name="System Bold" size="14.0" /></font>
+    <Label layoutX="80" layoutY="270" text="Qty" textFill="#5a5c6e">
+        <font><Font name="System Bold" size="13.0" /></font>
     </Label>
-    <TextField fx:id="txtQty" layoutX="200" layoutY="265" prefWidth="180" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5;" />
+    <TextField fx:id="txtQty" layoutX="170" layoutY="265" prefWidth="180" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5;" />
 
-    <Label layoutX="100" layoutY="320" text="Buying Price" textFill="#5a5c6e">
-        <font><Font name="System Bold" size="14.0" /></font>
+    <Label layoutX="380" layoutY="120" text="Category" textFill="#5a5c6e">
+        <font><Font name="System Bold" size="13.0" /></font>
     </Label>
-    <TextField fx:id="txtBuying" layoutX="200" layoutY="315" prefWidth="180" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5;" />
+    <ComboBox fx:id="cmbCategory" layoutX="470" layoutY="115" prefWidth="180" style="-fx-padding: 5; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5; -fx-background-color: white;" />
 
-    <Label layoutX="530" layoutY="120" text="Selling Price" textFill="#5a5c6e">
-        <font><Font name="System Bold" size="14.0" /></font>
+    <Label layoutX="380" layoutY="170" text="Size" textFill="#5a5c6e">
+        <font><Font name="System Bold" size="13.0" /></font>
     </Label>
-    <TextField fx:id="txtSelling" layoutX="640" layoutY="115" prefWidth="180" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5;" />
+    <TextField fx:id="txtSize" layoutX="470" layoutY="165" prefWidth="180" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5;" />
 
-    <Label layoutX="530" layoutY="170" text="Category" textFill="#5a5c6e">
-        <font><Font name="System Bold" size="14.0" /></font>
+    <Label layoutX="380" layoutY="220" text="Buying Price" textFill="#5a5c6e">
+        <font><Font name="System Bold" size="13.0" /></font>
     </Label>
-    <ComboBox fx:id="cmbCategory" layoutX="640" layoutY="165" prefWidth="180" style="-fx-padding: 5; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5; -fx-background-color: white;" />
+    <TextField fx:id="txtBuying" layoutX="470" layoutY="215" prefWidth="180" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5;" />
 
-    <Label layoutX="530" layoutY="220" text="Size" textFill="#5a5c6e">
-        <font><Font name="System Bold" size="14.0" /></font>
+    <Label layoutX="380" layoutY="270" text="Selling Price" textFill="#5a5c6e">
+        <font><Font name="System Bold" size="13.0" /></font>
     </Label>
-    <TextField fx:id="txtSize" layoutX="640" layoutY="215" prefWidth="180" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5;" />
+    <TextField fx:id="txtSelling" layoutX="470" layoutY="265" prefWidth="180" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5;" />
 
-    <Label layoutX="530" layoutY="270" text="Profit" textFill="#5a5c6e">
-        <font><Font name="System Bold" size="14.0" /></font>
+    <Label layoutX="380" layoutY="320" text="Profit" textFill="#5a5c6e">
+        <font><Font name="System Bold" size="13.0" /></font>
     </Label>
-    <TextField fx:id="txtProfit" editable="false" layoutX="640" layoutY="265" prefWidth="180" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5; -fx-background-color: #f9fafb;" />
+    <TextField fx:id="txtProfit" editable="false" layoutX="470" layoutY="315" prefWidth="180" style="-fx-padding: 8; -fx-background-radius: 5; -fx-border-color: #d1d5db; -fx-border-radius: 5; -fx-background-color: #f9fafb;" />
 
-    <Button layoutX="580.0" layoutY="320.0" onAction="#clearFields" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;" text="Clear">
-        <font><Font name="System Bold" size="14.0" /></font>
+
+    <Rectangle arcHeight="15" arcWidth="15" fill="#f9fafb" height="150.0" layoutX="700.0" layoutY="115.0" stroke="#d1d5db" strokeType="INSIDE" strokeWidth="2.0" width="150.0" strokeDashArray="5,5" />
+    <Label layoutX="735.0" layoutY="180.0" text="No Image" textFill="#9ca3af" />
+
+    <ImageView fx:id="imgProduct" fitHeight="140.0" fitWidth="140.0" layoutX="705.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true" />
+
+    <Button layoutX="700.0" layoutY="280.0" onAction="#chooseImage" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="Browse Image">
+        <font><Font name="System Bold" size="12.0" /></font>
     </Button>
 
-    <Button layoutX="700.0" layoutY="320.0" onAction="#addItem" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;" text="+ Add Product">
+    <Button layoutX="680.0" layoutY="330.0" onAction="#clearFields" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;" text="Clear">
+        <font><Font name="System Bold" size="14.0" /></font>
+    </Button>
+    <Button layoutX="770.0" layoutY="330.0" onAction="#addItem" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;" text="+ Add Product">
         <font><Font name="System Bold" size="14.0" /></font>
     </Button>
 
     <Label fx:id="lblStatus" layoutX="50.0" layoutY="390.0" text="" textFill="RED" />
 
-    <TableView fx:id="tblItems" layoutX="50.0" layoutY="410.0" prefHeight="260" prefWidth="850" style="-fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;">
+    <TableView fx:id="tblItems" layoutX="50.0" layoutY="415.0" prefHeight="260" prefWidth="850" style="-fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;">
         <columns>
-            <TableColumn fx:id="colCode" prefWidth="80" text="Item ID" />
-            <TableColumn fx:id="colDescription" prefWidth="180" text="Product Name" />
+            <TableColumn fx:id="colCode" prefWidth="70" text="ID" />
+            <TableColumn fx:id="colDescription" prefWidth="160" text="Product Name" />
             <TableColumn fx:id="colCategory" prefWidth="100" text="Category" />
-            <TableColumn fx:id="colQty" prefWidth="70" text="Qty" />
-            <TableColumn fx:id="colBuy" prefWidth="100.0" text="Buying Price" />
-            <TableColumn fx:id="colSell" prefWidth="100.0" text="Selling Price" />
-            <TableColumn fx:id="colProfit" prefWidth="90.0" text="Profit" />
-            <TableColumn fx:id="colSupplier" prefWidth="128.0" text="Supplier" />
+            <TableColumn fx:id="colQty" prefWidth="60" text="Qty" />
+            <TableColumn fx:id="colBuy" prefWidth="90.0" text="Buy Price" />
+            <TableColumn fx:id="colSell" prefWidth="90.0" text="Sell Price" />
+            <TableColumn fx:id="colProfit" prefWidth="80.0" text="Profit" />
+            <TableColumn fx:id="colSupplier" prefWidth="180.0" text="Supplier" />
         </columns>
     </TableView>
 

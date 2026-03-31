@@ -7,7 +7,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import model.entity.Product;
 import model.entity.Supplier;
 import org.hibernate.Session;
@@ -15,7 +18,13 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import util.HibernateUtil;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -43,9 +52,11 @@ public class AddItemFormController implements Initializable {
     @FXML private TextField txtSelling;
     @FXML private TextField txtSize;
 
+    @FXML private ImageView imgProduct;
+    private String selectedImagePath = null;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         generateNextProductId();
 
         cmbCategory.setItems(FXCollections.observableArrayList(
@@ -68,7 +79,37 @@ public class AddItemFormController implements Initializable {
         loadTableData();
     }
 
-    //Auto ID Generation
+    @FXML
+    void chooseImage(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Product Image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(null);
+
+        if (selectedFile != null) {
+            try {
+                String fileName = System.currentTimeMillis() + "_" + selectedFile.getName();
+                Path destinationPath = Paths.get("saved_images", fileName);
+
+                Files.createDirectories(destinationPath.getParent());
+
+                Files.copy(selectedFile.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+                selectedImagePath = destinationPath.toString();
+                Image image = new Image("file:" + selectedImagePath);
+                imgProduct.setImage(image);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                lblStatus.setTextFill(Color.RED);
+                lblStatus.setText("Failed to save image!");
+            }
+        }
+    }
+
     private void generateNextProductId() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Product> query = session.createQuery("FROM Product ORDER BY productId DESC", Product.class);
@@ -87,7 +128,6 @@ public class AddItemFormController implements Initializable {
             txtCode.setText("P001");
         }
     }
-    // ----------------------------------------------------------------------
 
     private void calculateProfit() {
         try {
@@ -145,7 +185,7 @@ public class AddItemFormController implements Initializable {
                 return;
             }
 
-            Product product = new Product(id, name, category, size, buyingPrice, sellingPrice, profit, qty, supplierId, null);
+            Product product = new Product(id, name, category, size, buyingPrice, sellingPrice, profit, qty, supplierId, selectedImagePath);
 
             Transaction transaction = null;
             try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -158,7 +198,6 @@ public class AddItemFormController implements Initializable {
 
                 loadTableData();
                 clearFields(null);
-
             }
 
         } catch (NumberFormatException e) {
@@ -182,8 +221,10 @@ public class AddItemFormController implements Initializable {
         cmbCategory.getSelectionModel().clearSelection();
         cmbSupplier.getSelectionModel().clearSelection();
 
-        if(event != null) lblStatus.setText("");
+        imgProduct.setImage(null);
+        selectedImagePath = null;
 
+        if(event != null) lblStatus.setText("");
         generateNextProductId();
     }
 }

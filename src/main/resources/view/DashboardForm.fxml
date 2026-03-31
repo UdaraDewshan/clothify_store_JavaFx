@@ -34,6 +34,10 @@
                             <font><Font name="System Bold" size="16.0" /></font>
                         </Button>
 
+                        <Button fx:id="btnEmployees" mnemonicParsing="false" onAction="#btnEmployeesOnAction" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-text-fill: #a0aabf; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;" text="Employees">
+                            <font><Font name="System Bold" size="16.0" /></font>
+                        </Button>
+
                         <Button fx:id="btnReports" mnemonicParsing="false" onAction="#btnReportsOnAction" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-text-fill: #a0aabf; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;" text="Reports">
                             <font><Font name="System Bold" size="16.0" /></font>
                         </Button>

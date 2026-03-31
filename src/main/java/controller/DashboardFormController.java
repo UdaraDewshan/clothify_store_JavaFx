@@ -23,9 +23,16 @@ public class DashboardFormController implements Initializable {
     @FXML private Button btnInventory;
     @FXML private Button btnSuppliers;
     @FXML private Button btnReports;
+    @FXML private Button btnEmployees;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
+
+    @FXML
+    void btnEmployeesOnAction(ActionEvent event) {
+        loadUI("EmployeeForm.fxml");
+        setActiveButton(btnEmployees);
     }
 
     @FXML
@@ -80,14 +87,22 @@ public class DashboardFormController implements Initializable {
 
     private void setActiveButton(Button activeButton) {
         String defaultStyle = "-fx-background-color: transparent; -fx-text-fill: #a0aabf; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;";
+
         btnDashboard.setStyle(defaultStyle);
         btnPOS.setStyle(defaultStyle);
         btnInventory.setStyle(defaultStyle);
         btnSuppliers.setStyle(defaultStyle);
         btnReports.setStyle(defaultStyle);
 
+        if (btnEmployees != null) {
+            btnEmployees.setStyle(defaultStyle);
+        }
+
         String activeStyle = "-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-alignment: BASELINE_LEFT; -fx-padding: 0 0 0 40; -fx-cursor: hand;";
-        activeButton.setStyle(activeStyle);
+
+        if (activeButton != null) {
+            activeButton.setStyle(activeStyle);
+        }
     }
 
     public void setRole(String role) {
@@ -98,6 +113,9 @@ public class DashboardFormController implements Initializable {
         } else if (role.equals("Staff")) {
             loadUI("POSForm.fxml");
             setActiveButton(btnPOS);
+
+            btnEmployees.setVisible(false);
+            btnEmployees.setManaged(false);
 
             btnDashboard.setVisible(false);
             btnDashboard.setManaged(false);

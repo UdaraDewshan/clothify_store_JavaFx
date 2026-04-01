@@ -16,17 +16,19 @@ import model.entity.Order;
 import model.entity.OrderDetail;
 import model.entity.Product;
 import model.tm.CartTm;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import util.HibernateUtil;
+import service.OrderService;
+import service.ProductService;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class POSFormController implements Initializable {
+
+    private final ProductService productService = new ProductService();
+    private final OrderService orderService = new OrderService();
 
     @FXML private GridPane gridProducts;
     @FXML private Label lblDiscount;
@@ -50,29 +52,26 @@ public class POSFormController implements Initializable {
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
         colAction.setCellValueFactory(new PropertyValueFactory<>("btnRemove"));
 
-        generateNextOrderId();
+        lblOrderId.setText(orderService.generateNextOrderId());
         loadProductsToGrid();
     }
 
     private void loadProductsToGrid() {
         gridProducts.getChildren().clear();
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<Product> products = session.createQuery("FROM Product", Product.class).list();
 
-            int column = 0;
-            int row = 1;
+        List<Product> products = productService.getAllProducts();
 
-            for (Product product : products) {
-                VBox card = createProductCard(product);
+        int column = 0;
+        int row = 1;
 
-                if (column == 3) {
-                    column = 0;
-                    row++;
-                }
-                gridProducts.add(card, column++, row);
+        for (Product product : products) {
+            VBox card = createProductCard(product);
+
+            if (column == 3) {
+                column = 0;
+                row++;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            gridProducts.add(card, column++, row);
         }
     }
 
@@ -158,25 +157,6 @@ public class POSFormController implements Initializable {
         lblNetTotal.setText(String.format("LKR %.2f", netTotal));
     }
 
-    private void generateNextOrderId() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Order> query = session.createQuery("FROM Order ORDER BY orderId DESC", Order.class);
-            query.setMaxResults(1);
-            Order lastOrder = query.uniqueResult();
-
-            if (lastOrder != null) {
-                String lastId = lastOrder.getOrderId();
-                int nextIdNum = Integer.parseInt(lastId.replace("ORD-", "")) + 1;
-                lblOrderId.setText(String.format("ORD-%03d", nextIdNum));
-            } else {
-                lblOrderId.setText("ORD-001");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            lblOrderId.setText("ORD-001");
-        }
-    }
-
     @FXML
     void placeOrderOnAction(ActionEvent event) {
         if (cartList.isEmpty()) {
@@ -185,25 +165,18 @@ public class POSFormController implements Initializable {
             return;
         }
 
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
+        String orderId = lblOrderId.getText();
 
-            String orderId = lblOrderId.getText();
-            Order order = new Order(orderId, new Date(), netTotal, "CUST-000", "Admin");
-            session.save(order);
+        Order order = new Order(orderId, new Date(), netTotal, "CUST-000", "Admin");
 
-            for (CartTm tm : cartList) {
-                OrderDetail detail = new OrderDetail(null, orderId, tm.getCode(), tm.getQty(), tm.getUnitPrice());
-                session.save(detail);
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        for (CartTm tm : cartList) {
+            orderDetails.add(new OrderDetail(null, orderId, tm.getCode(), tm.getQty(), tm.getUnitPrice()));
+        }
 
-                Product product = session.get(Product.class, tm.getCode());
-                product.setQty(product.getQty() - tm.getQty());
-                session.update(product);
-            }
+        boolean isPlaced = orderService.placeOrder(order, orderDetails);
 
-            transaction.commit();
-
+        if (isPlaced) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Order Placed Successfully!");
             alert.show();
 
@@ -214,14 +187,14 @@ public class POSFormController implements Initializable {
             double discount = subTotal * 0.05;
 
             util.PdfGenerator.generateBill(orderId, cartList, subTotal, discount, netTotal);
-            
+
             cartList.clear();
             calculateTotal();
-            generateNextOrderId();
+            lblOrderId.setText(orderService.generateNextOrderId());
 
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
+            loadProductsToGrid();
+
+        } else {
             new Alert(Alert.AlertType.ERROR, "Failed to place order!").show();
         }
     }

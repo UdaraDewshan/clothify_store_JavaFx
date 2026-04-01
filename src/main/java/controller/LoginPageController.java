@@ -14,26 +14,20 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.entity.User;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
-import util.HibernateUtil;
+import service.UserService;
 
 import java.io.IOException;
 
 public class LoginPageController {
 
-    @FXML
-    private Button btnLogin;
-    @FXML
-    private CheckBox chkRemember;
-    @FXML
-    private Label lblMessage;
-    @FXML
-    private Hyperlink linkSignUp;
-    @FXML
-    private TextField txtEmail;
-    @FXML
-    private PasswordField txtPassword;
+    private final UserService userService = new UserService();
+
+    @FXML private Button btnLogin;
+    @FXML private CheckBox chkRemember;
+    @FXML private Label lblMessage;
+    @FXML private Hyperlink linkSignUp;
+    @FXML private TextField txtEmail;
+    @FXML private PasswordField txtPassword;
 
     @FXML
     void onLogin(ActionEvent event) {
@@ -46,11 +40,8 @@ public class LoginPageController {
             return;
         }
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-            Query<User> query = session.createQuery("FROM User WHERE username = :email", User.class);
-            query.setParameter("email", email);
-            User user = query.uniqueResult();
+        try {
+            User user = userService.getUserByUsername(email);
 
             if (user != null) {
                 if (user.getPassword().equals(password)) {

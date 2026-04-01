@@ -9,16 +9,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import model.entity.Supplier;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import util.HibernateUtil;
+import service.SupplierService;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class SupplierFormController implements Initializable {
+
+    private final SupplierService supplierService = new SupplierService();
 
     @FXML private TableView<Supplier> tblSuppliers;
     @FXML private TableColumn<Supplier, String> colId;
@@ -42,36 +41,15 @@ public class SupplierFormController implements Initializable {
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colContact.setCellValueFactory(new PropertyValueFactory<>("contactNo"));
 
-        generateNextSupplierId();
+        txtSupplierId.setText(supplierService.generateNextSupplierId());
         loadTableData();
     }
 
-    private void generateNextSupplierId() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Supplier> query = session.createQuery("FROM Supplier ORDER BY supplierId DESC", Supplier.class);
-            query.setMaxResults(1);
-            Supplier lastSupplier = query.uniqueResult();
-
-            if (lastSupplier != null) {
-                String lastId = lastSupplier.getSupplierId();
-                int nextIdNum = Integer.parseInt(lastId.replace("S", "")) + 1;
-                txtSupplierId.setText(String.format("S%03d", nextIdNum));
-            } else {
-                txtSupplierId.setText("S001");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            txtSupplierId.setText("S001");
-        }
-    }
-
     private void loadTableData() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<Supplier> suppliers = session.createQuery("FROM Supplier", Supplier.class).list();
+        List<Supplier> suppliers = supplierService.getAllSuppliers();
+        if (suppliers != null) {
             ObservableList<Supplier> supplierList = FXCollections.observableArrayList(suppliers);
             tblSuppliers.setItems(supplierList);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -105,24 +83,15 @@ public class SupplierFormController implements Initializable {
         }
 
         Supplier supplier = new Supplier(id, name, company, email, contact);
-        Transaction transaction = null;
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.save(supplier);
-            transaction.commit();
-
+        if (supplierService.addSupplier(supplier)) {
             lblStatus.setTextFill(Color.GREEN);
             lblStatus.setText("Supplier Added Successfully!");
-
             loadTableData();
             clearFields();
-
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
+        } else {
             lblStatus.setTextFill(Color.RED);
             lblStatus.setText("Failed to add supplier!");
-            e.printStackTrace();
         }
     }
 
@@ -137,6 +106,7 @@ public class SupplierFormController implements Initializable {
         txtEmail.clear();
         txtContact.clear();
         lblStatus.setText("");
-        generateNextSupplierId();
+
+        txtSupplierId.setText(supplierService.generateNextSupplierId());
     }
 }

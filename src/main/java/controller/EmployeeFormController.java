@@ -9,15 +9,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import model.entity.User;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import util.HibernateUtil;
+import service.UserService;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class EmployeeFormController implements Initializable {
+
+    private final UserService userService = new UserService();
 
     @FXML private ComboBox<String> cmbRole;
     @FXML private TextField txtName, txtEmail, txtPassword, txtPhone, txtAddress, txtJoinDate, txtHiddenId;
@@ -52,12 +52,10 @@ public class EmployeeFormController implements Initializable {
     }
 
     private void loadTableData() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<User> users = session.createQuery("FROM User", User.class).list();
+        List<User> users = userService.getAllEmployees();
+        if (users != null) {
             ObservableList<User> userList = FXCollections.observableArrayList(users);
             tblEmployees.setItems(userList);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -104,19 +102,12 @@ public class EmployeeFormController implements Initializable {
         user.setAddress(txtAddress.getText());
         user.setJoinDate(txtJoinDate.getText());
 
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.save(user);
-            transaction.commit();
-
+        if (userService.addEmployee(user)) {
             lblStatus.setTextFill(Color.GREEN);
             lblStatus.setText("Employee Added Successfully!");
             loadTableData();
             clearFields();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
+        } else {
             lblStatus.setTextFill(Color.RED);
             lblStatus.setText("Failed to add employee!");
         }
@@ -145,33 +136,24 @@ public class EmployeeFormController implements Initializable {
             return;
         }
 
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
+        User user = new User();
+        user.setId(Long.parseLong(txtHiddenId.getText()));
+        user.setName(txtName.getText());
+        user.setUsername(txtEmail.getText());
+        user.setPassword(txtPassword.getText());
+        user.setRole(cmbRole.getValue());
+        user.setPhoneNo(txtPhone.getText());
+        user.setAddress(txtAddress.getText());
+        user.setJoinDate(txtJoinDate.getText());
 
-            Long id = Long.parseLong(txtHiddenId.getText());
-            User user = session.get(User.class, id);
-
-            if (user != null) {
-                user.setName(txtName.getText());
-                user.setUsername(txtEmail.getText());
-                user.setPassword(txtPassword.getText());
-                user.setRole(cmbRole.getValue());
-                user.setPhoneNo(txtPhone.getText());
-                user.setAddress(txtAddress.getText());
-                user.setJoinDate(txtJoinDate.getText());
-
-                session.update(user);
-                transaction.commit();
-
-                lblStatus.setTextFill(Color.GREEN);
-                lblStatus.setText("Employee Updated Successfully!");
-                loadTableData();
-                clearFields();
-            }
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
+        if (userService.updateEmployee(user)) {
+            lblStatus.setTextFill(Color.GREEN);
+            lblStatus.setText("Employee Updated Successfully!");
+            loadTableData();
+            clearFields();
+        } else {
+            lblStatus.setTextFill(Color.RED);
+            lblStatus.setText("Failed to update employee!");
         }
     }
 
@@ -187,25 +169,16 @@ public class EmployeeFormController implements Initializable {
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
-            Transaction transaction = null;
-            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                transaction = session.beginTransaction();
+            Long id = Long.parseLong(txtHiddenId.getText());
 
-                Long id = Long.parseLong(txtHiddenId.getText());
-                User user = session.get(User.class, id);
-
-                if (user != null) {
-                    session.delete(user);
-                    transaction.commit();
-
-                    lblStatus.setTextFill(Color.GREEN);
-                    lblStatus.setText("Employee Deleted Successfully!");
-                    loadTableData();
-                    clearFields();
-                }
-            } catch (Exception e) {
-                if (transaction != null) transaction.rollback();
-                e.printStackTrace();
+            if (userService.deleteEmployee(id)) {
+                lblStatus.setTextFill(Color.GREEN);
+                lblStatus.setText("Employee Deleted Successfully!");
+                loadTableData();
+                clearFields();
+            } else {
+                lblStatus.setTextFill(Color.RED);
+                lblStatus.setText("Failed to delete employee!");
             }
         }
     }

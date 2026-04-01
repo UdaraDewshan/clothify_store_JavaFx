@@ -13,10 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import model.entity.Product;
 import model.entity.Supplier;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import util.HibernateUtil;
+import service.ProductService;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +26,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddItemFormController implements Initializable {
+
+    private final ProductService productService = new ProductService();
 
     @FXML private ComboBox<String> cmbCategory;
     @FXML private ComboBox<String> cmbSupplier;
@@ -57,7 +56,8 @@ public class AddItemFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        generateNextProductId();
+
+        txtCode.setText(productService.generateNextProductId());
 
         cmbCategory.setItems(FXCollections.observableArrayList(
                 "Men's Wear", "Women's Wear", "Kids", "Accessories", "Footwear"
@@ -143,24 +143,18 @@ public class AddItemFormController implements Initializable {
             }
             Product product = new Product(id, name, category, size, buyingPrice, sellingPrice, profit, qty, supplierId, selectedImagePath);
 
-            Transaction transaction = null;
-            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                transaction = session.beginTransaction();
-                session.save(product);
-                transaction.commit();
-
+            if (productService.addProduct(product)) {
                 lblStatus.setTextFill(Color.GREEN);
                 lblStatus.setText("Product Added Successfully!");
                 loadTableData();
                 clearFields(null);
+            } else {
+                lblStatus.setTextFill(Color.RED);
+                lblStatus.setText("Error saving product!");
             }
         } catch (NumberFormatException e) {
             lblStatus.setTextFill(Color.RED);
             lblStatus.setText("Invalid Number Format! Check Prices & Qty.");
-        } catch (Exception e) {
-            lblStatus.setTextFill(Color.RED);
-            lblStatus.setText("Error saving product!");
-            e.printStackTrace();
         }
     }
 
@@ -193,17 +187,14 @@ public class AddItemFormController implements Initializable {
 
             Product product = new Product(id, name, category, size, buyingPrice, sellingPrice, profit, qty, supplierId, selectedImagePath);
 
-            Transaction transaction = null;
-            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                transaction = session.beginTransaction();
-                session.update(product);
-                transaction.commit();
-
+            if (productService.updateProduct(product)) {
                 lblStatus.setTextFill(Color.GREEN);
                 lblStatus.setText("Product Updated Successfully!");
-
                 loadTableData();
                 clearFields(null);
+            } else {
+                lblStatus.setTextFill(Color.RED);
+                lblStatus.setText("Error updating product!");
             }
         } catch (Exception e) {
             lblStatus.setTextFill(Color.RED);
@@ -226,26 +217,14 @@ public class AddItemFormController implements Initializable {
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
-            Transaction transaction = null;
-            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                transaction = session.beginTransaction();
-
-                Product product = session.get(Product.class, id);
-                if (product != null) {
-                    session.delete(product);
-                    transaction.commit();
-
-                    lblStatus.setTextFill(Color.GREEN);
-                    lblStatus.setText("Product Deleted Successfully!");
-
-                    loadTableData();
-                    clearFields(null);
-                }
-            } catch (Exception e) {
-                if (transaction != null) transaction.rollback();
+            if (productService.deleteProduct(id)) {
+                lblStatus.setTextFill(Color.GREEN);
+                lblStatus.setText("Product Deleted Successfully!");
+                loadTableData();
+                clearFields(null);
+            } else {
                 lblStatus.setTextFill(Color.RED);
                 lblStatus.setText("Error deleting product!");
-                e.printStackTrace();
             }
         }
     }
@@ -278,25 +257,6 @@ public class AddItemFormController implements Initializable {
         }
     }
 
-    private void generateNextProductId() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Product> query = session.createQuery("FROM Product ORDER BY productId DESC", Product.class);
-            query.setMaxResults(1);
-            Product lastProduct = query.uniqueResult();
-
-            if (lastProduct != null) {
-                String lastId = lastProduct.getProductId();
-                int nextIdNum = Integer.parseInt(lastId.replace("P", "")) + 1;
-                txtCode.setText(String.format("P%03d", nextIdNum));
-            } else {
-                txtCode.setText("P001");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            txtCode.setText("P001");
-        }
-    }
-
     private void calculateProfit() {
         try {
             double buying = Double.parseDouble(txtBuying.getText());
@@ -309,26 +269,18 @@ public class AddItemFormController implements Initializable {
     }
 
     private void loadSuppliers() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<Supplier> suppliers = session.createQuery("FROM Supplier", Supplier.class).list();
-            ObservableList<String> supplierList = FXCollections.observableArrayList();
-            for (Supplier s : suppliers) {
-                supplierList.add(s.getSupplierId() + " - " + s.getName());
-            }
-            cmbSupplier.setItems(supplierList);
-        } catch (Exception e) {
-            e.printStackTrace();
+        List<Supplier> suppliers = productService.getAllSuppliers();
+        ObservableList<String> supplierList = FXCollections.observableArrayList();
+        for (Supplier s : suppliers) {
+            supplierList.add(s.getSupplierId() + " - " + s.getName());
         }
+        cmbSupplier.setItems(supplierList);
     }
 
     private void loadTableData() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<Product> products = session.createQuery("FROM Product", Product.class).list();
-            ObservableList<Product> productList = FXCollections.observableArrayList(products);
-            tblItems.setItems(productList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        List<Product> products = productService.getAllProducts();
+        ObservableList<Product> productList = FXCollections.observableArrayList(products);
+        tblItems.setItems(productList);
     }
 
     @FXML
@@ -347,6 +299,7 @@ public class AddItemFormController implements Initializable {
 
         if(event != null) lblStatus.setText("");
         tblItems.getSelectionModel().clearSelection();
-        generateNextProductId();
+
+        txtCode.setText(productService.generateNextProductId());
     }
 }

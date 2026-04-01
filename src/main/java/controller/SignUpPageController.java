@@ -1,0 +1,104 @@
+package controller;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import model.entity.User;
+import service.UserService;
+import util.PasswordUtil;
+
+import java.io.IOException;
+
+public class SignUpPageController {
+
+    private final UserService userService = new UserService();
+
+    @FXML private TextField addressField;
+    @FXML private Button btnSingUp;
+    @FXML private TextField joinDateField;
+    @FXML private Hyperlink linkSingIn;
+    @FXML private TextField nameField;
+    @FXML private PasswordField passwordField;
+    @FXML private TextField phoneNoField;
+    @FXML private Label statusLabel;
+    @FXML private TextField usernameField;
+
+    @FXML
+    void onSingUpAction(ActionEvent event) {
+        String name = nameField.getText();
+        String address = addressField.getText();
+        String joinDate = joinDateField.getText();
+        String phoneNo = phoneNoField.getText();
+        String email = usernameField.getText();
+        String password = passwordField.getText();
+
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            statusLabel.setTextFill(Color.RED);
+            statusLabel.setText("Please fill Name, Email and Password!");
+            return;
+        }
+
+        String role = "Staff";
+
+        if (email.endsWith("@clothify.admin.com")) {
+            role = "Admin";
+        } else if (!email.endsWith("@clothify.com")) {
+            statusLabel.setTextFill(Color.RED);
+            statusLabel.setText("Please use a valid company email!");
+            return;
+        }
+
+        String encryptedPassword = PasswordUtil.encryptPassword(password);
+
+        User user = new User();
+        user.setName(name);
+        user.setAddress(address);
+        user.setJoinDate(joinDate);
+        user.setPhoneNo(phoneNo);
+        user.setUsername(email);
+        user.setPassword(encryptedPassword);
+        user.setRole(role);
+
+        if (userService.addEmployee(user)) {
+            statusLabel.setTextFill(Color.GREEN);
+            statusLabel.setText("Success! Registered as " + role);
+            clearFields();
+        } else {
+            statusLabel.setTextFill(Color.RED);
+            statusLabel.setText("Error: Could not register user.");
+        }
+    }
+
+    private void clearFields() {
+        nameField.clear();
+        addressField.clear();
+        joinDateField.clear();
+        phoneNoField.clear();
+        usernameField.clear();
+        passwordField.clear();
+    }
+
+    @FXML
+    void switchToLogin(ActionEvent event) {
+        try {
+            Stage stage = new Stage();
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/LoginPage.fxml"))));
+            Stage currentStage = (Stage) linkSingIn.getScene().getWindow();
+            currentStage.close();
+            stage.show();
+            stage.setTitle("Sign In");
+        } catch (IOException e) {
+            e.printStackTrace();
+            statusLabel.setTextFill(Color.RED);
+            statusLabel.setText("Error loading Login Page!");
+        }
+    }
+}

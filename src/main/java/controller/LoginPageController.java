@@ -44,7 +44,9 @@ public class LoginPageController {
             User user = userService.getUserByUsername(email);
 
             if (user != null) {
-                if (user.getPassword().equals(password)) {
+                String encryptedInput = util.PasswordUtil.encryptPassword(password);
+
+                if (user.getPassword().equals(encryptedInput)) {
                     lblMessage.setTextFill(Color.GREEN);
                     lblMessage.setText("Login Successful! Welcome " + user.getName());
 

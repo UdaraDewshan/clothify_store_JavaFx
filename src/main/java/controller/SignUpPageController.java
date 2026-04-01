@@ -12,40 +12,24 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.entity.User;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import util.HibernateUtil;
+import service.UserService;
+import util.PasswordUtil;
 
 import java.io.IOException;
 
 public class SignUpPageController {
 
-    @FXML
-    private TextField addressField;
+    private final UserService userService = new UserService();
 
-    @FXML
-    private Button btnSingUp;
-
-    @FXML
-    private TextField joinDateField;
-
-    @FXML
-    private Hyperlink linkSingIn;
-
-    @FXML
-    private TextField nameField;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private TextField phoneNoField;
-
-    @FXML
-    private Label statusLabel;
-
-    @FXML
-    private TextField usernameField;
+    @FXML private TextField addressField;
+    @FXML private Button btnSingUp;
+    @FXML private TextField joinDateField;
+    @FXML private Hyperlink linkSingIn;
+    @FXML private TextField nameField;
+    @FXML private PasswordField passwordField;
+    @FXML private TextField phoneNoField;
+    @FXML private Label statusLabel;
+    @FXML private TextField usernameField;
 
     @FXML
     void onSingUpAction(ActionEvent event) {
@@ -72,31 +56,22 @@ public class SignUpPageController {
             return;
         }
 
+        String encryptedPassword = PasswordUtil.encryptPassword(password);
+
         User user = new User();
         user.setName(name);
         user.setAddress(address);
         user.setJoinDate(joinDate);
         user.setPhoneNo(phoneNo);
         user.setUsername(email);
-        user.setPassword(password);
+        user.setPassword(encryptedPassword);
         user.setRole(role);
 
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.save(user);
-            transaction.commit();
-
+        if (userService.addEmployee(user)) {
             statusLabel.setTextFill(Color.GREEN);
             statusLabel.setText("Success! Registered as " + role);
-
             clearFields();
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
+        } else {
             statusLabel.setTextFill(Color.RED);
             statusLabel.setText("Error: Could not register user.");
         }
@@ -126,5 +101,4 @@ public class SignUpPageController {
             statusLabel.setText("Error loading Login Page!");
         }
     }
-
 }
